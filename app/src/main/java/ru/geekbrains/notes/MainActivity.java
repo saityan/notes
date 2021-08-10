@@ -20,24 +20,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initNotes();
-
         getSupportFragmentManager().
                 beginTransaction().
                 replace(R.id.notes_container, NotesFragment.newInstance())
                 .commit();
+
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.note_container, NoteFragment.newInstance(notes.getFirst()))
+                    .replace(R.id.note_container, NoteFragment.newInstance(new Note ("test", "another test")))
                     .commit();
         }
-    }
-
-    void initNotes() {
-        notes = new LinkedList<>();
-        notes.add(new Note("grocery store", "buy some cheese and vegetables"));
-        notes.add(new Note("pick up Mike", "take Mike home after school"));
-        notes.add(new Note("dentist", "appointment is at 19-00 on Friday"));
     }
 }

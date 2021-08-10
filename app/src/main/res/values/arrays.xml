@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="notes">
+        <item>grocery store</item>
+        <item>pick up Mike</item>
+        <item>dentist</item>
+    </string-array>
+
+    <string-array name="texts">
+        <item>buy some cheese and vegetables</item>
+        <item>pick up Mike after school</item>
+        <item>appointment is at 15–00 on Friday</item>
+    </string-array>
+
+</resources>

@@ -29,6 +29,7 @@ public class NoteFragment extends Fragment {
         TextView textView = view.findViewById(R.id.text_view);
         titleView.setText(this.note.getTitle());
         textView.setText(this.note.getText());
+        titleView.setTypeface(null, Typeface.BOLD);
         textView.setTypeface(null, Typeface.ITALIC);
         return view;
     }

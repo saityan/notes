@@ -2,6 +2,7 @@ package ru.geekbrains.notes;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class NotesFragment extends Fragment {
             TextView textView = new TextView(getContext());
             textView.setText(name);
             textView.setTextSize(30);
+            textView.setGravity(Gravity.END);
             layout.addView(textView);
             int finalI = i;
             textView.setOnClickListener(new View.OnClickListener() {

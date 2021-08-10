@@ -4,16 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
-    LinkedList<Note> notes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.note_container, NoteFragment.newInstance(new Note ("test", "another test")))
+                    .replace(R.id.note_container, NoteFragment.newInstance(new Note ("", "")))
                     .commit();
         }
     }

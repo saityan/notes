@@ -36,6 +36,14 @@ public class Note implements Parcelable {
         }
     };
 
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(text);
+        parcel.writeString(creationDate);
+        parcel.writeString(dueDate);
+    }
+
     String getTitle() {
         return title;
     }
@@ -67,13 +75,5 @@ public class Note implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(title);
-        parcel.writeString(text);
-        parcel.writeString(creationDate);
-        parcel.writeString(dueDate);
     }
 }

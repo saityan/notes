@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -14,6 +15,7 @@
 
     <FrameLayout
         android:id="@+id/notes_container"
+        android:layout_gravity="end"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"/>

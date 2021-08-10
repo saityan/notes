@@ -1,5 +1,6 @@
 package ru.geekbrains.notes;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class NoteFragment extends Fragment {
         TextView textView = view.findViewById(R.id.text_view);
         titleView.setText(this.note.getTitle());
         textView.setText(this.note.getText());
+        textView.setTypeface(null, Typeface.ITALIC);
         return view;
     }
 

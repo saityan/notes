@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 
 public class NoteFragment extends Fragment {
 
-    public static String ARG_NOTE = "note";
+    public static String KEY_NOTE = "note";
     private Note note;
 
     public static NoteFragment newInstance(Note note) {
         NoteFragment fragment = new NoteFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ARG_NOTE, note);
+        bundle.putParcelable(KEY_NOTE, note);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -38,6 +38,12 @@ public class NoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null)
-            this.note = getArguments().getParcelable(ARG_NOTE);
+            this.note = getArguments().getParcelable(KEY_NOTE);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(KEY_NOTE, this.note);
+        super.onSaveInstanceState(outState);
     }
 }

@@ -15,6 +15,7 @@ public class NotesFragment extends Fragment {
 
     Note currentNote;
     boolean isLandscape;
+    public static String KEY_NOTE = "note";
 
     public static NotesFragment newInstance() { return new NotesFragment(); }
 
@@ -32,17 +33,20 @@ public class NotesFragment extends Fragment {
             textView.setGravity(Gravity.END);
             layout.addView(textView);
             int finalI = i;
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    currentNote = new Note((getResources().getStringArray(R.array.notes)[finalI]),
-                            (getResources().getStringArray(R.array.texts)[finalI]));
-                    isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-                    showNote();
-                }
+            textView.setOnClickListener(view1 -> {
+                currentNote = new Note((getResources().getStringArray(R.array.notes)[finalI]),
+                        (getResources().getStringArray(R.array.texts)[finalI]));
+                isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+                showNote();
             });
         }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(KEY_NOTE, currentNote);
+        super.onSaveInstanceState(outState);
     }
 
     private void showNote() {

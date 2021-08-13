@@ -7,7 +7,7 @@ import java.util.Calendar;
 public class Note implements Parcelable {
     private String title;
     private String text;
-    private String creationDate;
+    private final String creationDate;
     private String dueDate;
 
     Note(String title, String text) {
@@ -60,7 +60,7 @@ public class Note implements Parcelable {
         this.text = text;
     }
 
-    String getDate() {
+    String getCreationDateDate() {
         return creationDate;
     }
 

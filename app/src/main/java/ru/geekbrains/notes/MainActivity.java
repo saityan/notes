@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Fragment backStackFragment = (Fragment)getSupportFragmentManager()
                 .findFragmentById(R.id.notes_container);
-        if(backStackFragment instanceof NoteFragment){
+        if(backStackFragment instanceof NoteFragment) {
             onBackPressed();
         }
     }

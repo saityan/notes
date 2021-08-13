@@ -43,12 +43,6 @@ public class NotesFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(KEY_NOTE, currentNote);
-        super.onSaveInstanceState(outState);
-    }
-
     private void showNote() {
         if (isLandscape) {
             showNoteLand();

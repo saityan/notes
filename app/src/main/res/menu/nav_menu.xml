@@ -10,7 +10,7 @@
 
             <item
             android:id="@+id/action_about"
-            android:icon="@android:drawable/ic_menu_agenda"
+            android:icon="@android:drawable/ic_menu_help"
             android:orderInCategory="2"
             android:title="@string/about_application" />
         </menu>

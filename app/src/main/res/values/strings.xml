@@ -5,4 +5,5 @@
     <string name="openNavDrawer">Navigation Drawer Open</string>
     <string name="closeNavDrawer">Navigation Drawer Close</string>
     <string name="main_menu">MAIN MENU</string>
+    <string name="item">Item</string>
 </resources>

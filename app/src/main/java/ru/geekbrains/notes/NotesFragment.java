@@ -2,13 +2,11 @@ package ru.geekbrains.notes;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -62,7 +60,7 @@ public class NotesFragment extends Fragment {
         for (int i = 0; i < notes.length; i++) {
             String name = notes[i];
             View item = inflater.inflate(R.layout.item, layout, false);
-            TextView textView = item.findViewById(R.id.textView);
+            TextView textView = item.findViewById(R.id.titleView);
             textView.setText(name);
             textView.setPadding(20, 20, 2, 0);
             layout.addView(item);

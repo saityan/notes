@@ -27,7 +27,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
-        holder.getTextView().setText(titlesList[position]);
+        holder.getTitleView().setText(titlesList[position]);
+        holder.getTitleView().setPadding(20, 24, 2, 0);
     }
 
     @Override

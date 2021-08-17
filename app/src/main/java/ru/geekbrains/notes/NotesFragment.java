@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class NotesFragment extends Fragment {
 
@@ -17,11 +20,30 @@ public class NotesFragment extends Fragment {
 
     public static NotesFragment newInstance() { return new NotesFragment(); }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
-        initList(view);
+        String[] notes = getResources().getStringArray(R.array.notes);
+        String[] texts = getResources().getStringArray(R.array.texts);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        NotesAdapter notesAdapter = new NotesAdapter(notes);
+        notesAdapter.setNotesOnClickListener(new NotesOnClickListener() {
+            @Override
+            public void onNoteClick(View view, int position) {
+                currentNote = new Note(notes[position], texts[position]);
+                isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+                showNote();
+            }
+        });
+        recyclerView.setAdapter(notesAdapter);
 
         return view;
     }
@@ -49,29 +71,5 @@ public class NotesFragment extends Fragment {
                 .beginTransaction()
                 .replace(R.id.note_container, NoteFragment.newInstance(currentNote))
                 .commit();
-    }
-
-    private void initList (View view) {
-        LinearLayout layout = (LinearLayout) view;
-        String[] notes = getResources().getStringArray(R.array.notes);
-
-        LayoutInflater inflater = getLayoutInflater();
-
-        for (int i = 0; i < notes.length; i++) {
-            String name = notes[i];
-            View item = inflater.inflate(R.layout.item, layout, false);
-            TextView textView = item.findViewById(R.id.titleView);
-            textView.setText(name);
-            textView.setPadding(20, 20, 2, 0);
-            layout.addView(item);
-
-            int finalI = i;
-            textView.setOnClickListener(view1 -> {
-                currentNote = new Note((getResources().getStringArray(R.array.notes)[finalI]),
-                        (getResources().getStringArray(R.array.texts)[finalI]));
-                isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-                showNote();
-            });
-        }
     }
 }

@@ -5,12 +5,22 @@
         <item>grocery store</item>
         <item>pick up Mike</item>
         <item>dentist</item>
+        <item>do gb homework</item>
+        <item>visit John in hospital</item>
+        <item>make America great again</item>
+        <item>shoot the sheriff</item>
+        <item>save the market</item>
     </string-array>
 
     <string-array name="texts">
         <item>buy some cheese and vegetables</item>
         <item>pick up Mike after school</item>
         <item>appointment is at 15–00 on Friday</item>
+        <item>deadline is at 20–00 on Tuesday</item>
+        <item>try to visit John before Saturday</item>
+        <item>no due date</item>
+        <item>duel with the sheriff is on Friday, 10 a.m.</item>
+        <item>await further Bogdanoff`s movements</item>
     </string-array>
 
 </resources>

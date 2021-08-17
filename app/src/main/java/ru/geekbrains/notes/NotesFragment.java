@@ -64,6 +64,7 @@ public class NotesFragment extends Fragment {
             View item = inflater.inflate(R.layout.item, layout, false);
             TextView textView = item.findViewById(R.id.textView);
             textView.setText(name);
+            textView.setPadding(20, 20, 2, 0);
             layout.addView(item);
 
             int finalI = i;

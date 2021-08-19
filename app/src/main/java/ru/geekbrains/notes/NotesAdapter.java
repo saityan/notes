@@ -21,14 +21,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     @NonNull
     @Override
     public NotesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_view, parent, false);
         return new NotesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
         holder.title.setText(dataSource.getCardData(position).getTitle());
-//        holder.text.setText(dataSource.getCardData(position).getText());
+        holder.text.setText(dataSource.getCardData(position).getText());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         public NotesViewHolder(View itemView) {
             super(itemView);
 
-            this.title = itemView.findViewById(R.id.titleView);
+            this.title = itemView.findViewById(R.id.note_title);
             this.text = itemView.findViewById(R.id.description);
 
             this.title.setOnClickListener(new View.OnClickListener() {

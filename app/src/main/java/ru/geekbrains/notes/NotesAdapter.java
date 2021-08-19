@@ -1,9 +1,9 @@
 package ru.geekbrains.notes;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
-    private String[] titlesList;
+    private final CardSource dataSource;
     private NotesOnClickListener listener;
 
-    public NotesAdapter(String[] titlesList){ this.titlesList = titlesList; }
+    public NotesAdapter(CardSource dataSource){ this.dataSource = dataSource; }
 
     public void setNotesOnClickListener (NotesOnClickListener listener) { this.listener = listener; }
 
@@ -27,53 +27,30 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
-        holder.getTitleView().setText(titlesList[position]);
-        holder.getTitleView().setPadding(20, 24, 2, 0);
+        holder.title.setText(dataSource.getCardData(position).getTitle());
+//        holder.text.setText(dataSource.getCardData(position).getText());
     }
 
     @Override
-    public int getItemCount() { return titlesList.length; }
+    public int getItemCount() { return dataSource.size(); }
 
     public class NotesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titleView;
-        private TextView textView;
-        private ImageView imageView;
+        private final TextView title;
+        private final TextView text;
 
         public NotesViewHolder(View itemView) {
             super(itemView);
-            this.titleView = itemView.findViewById(R.id.titleView);
-            this.textView = itemView.findViewById(R.id.text_view);
-            titleView.setOnClickListener(new View.OnClickListener() {
+
+            this.title = itemView.findViewById(R.id.titleView);
+            this.text = itemView.findViewById(R.id.description);
+
+            this.title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onNoteClick(view, getAdapterPosition());
                 }
             });
-        }
-
-        public TextView getTitleView() {
-            return titleView;
-        }
-
-        public void setTitleView(TextView titleView) {
-            this.titleView = titleView;
-        }
-
-        public TextView getTextView() {
-            return textView;
-        }
-
-        public void setTextView(TextView textView) {
-            this.textView = textView;
-        }
-
-        public ImageView getImageView() {
-            return imageView;
-        }
-
-        public void setImageView(ImageView imageView) {
-            this.imageView = imageView;
         }
     }
 }

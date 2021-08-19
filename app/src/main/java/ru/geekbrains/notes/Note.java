@@ -10,7 +10,7 @@ public class Note implements Parcelable {
     private final String creationDate;
     private String dueDate;
 
-    Note(String title, String text) {
+    public Note(String title, String text) {
         this.title = title;
         this.text = text;
         this.creationDate = Calendar.getInstance().getTime().toString();
@@ -44,31 +44,31 @@ public class Note implements Parcelable {
         parcel.writeString(dueDate);
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    String getText() {
+    public String getText() {
         return text;
     }
 
-    void setText(String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
-    String getCreationDateDate() {
+    public String getCreationDateDate() {
         return creationDate;
     }
 
-    String getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    void setDueDate(String dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

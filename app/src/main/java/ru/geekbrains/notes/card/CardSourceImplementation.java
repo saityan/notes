@@ -1,9 +1,11 @@
-package ru.geekbrains.notes;
+package ru.geekbrains.notes.card;
 
 import android.content.res.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.geekbrains.notes.R;
 
 public class CardSourceImplementation implements CardSource {
     private List<CardData> dataSource;

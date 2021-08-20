@@ -9,7 +9,7 @@ import ru.geekbrains.notes.R;
 
 public class CardSourceImplementation implements CardSource {
     private List<CardData> dataSource;
-    private Resources resources;
+    private final Resources resources;
 
     @Override
     public int size() {
@@ -19,6 +19,26 @@ public class CardSourceImplementation implements CardSource {
     @Override
     public CardData getCardData(int position) {
         return this.dataSource.get(position);
+    }
+
+    @Override
+    public void deleteCardData(int position) {
+        dataSource.remove(position);
+    }
+
+    @Override
+    public void updateCardData(int position, CardData newCardData) {
+        dataSource.set(position, newCardData);
+    }
+
+    @Override
+    public void addCardData(CardData newCardData) {
+        dataSource.add(newCardData);
+    }
+
+    @Override
+    public void clearCardData() {
+        dataSource.clear();
     }
 
     public CardSourceImplementation(Resources resources) {

@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        Fragment backStackFragment = (Fragment)getSupportFragmentManager()
+        Fragment backStackFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.notes_container);
         if(backStackFragment instanceof NoteFragment) {
             onBackPressed();
@@ -69,10 +71,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
-
-}

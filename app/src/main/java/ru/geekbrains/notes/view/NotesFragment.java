@@ -2,6 +2,7 @@ package ru.geekbrains.notes.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +46,7 @@ public class NotesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        this.adapter = new NotesAdapter(this.data);
+        this.adapter = new NotesAdapter(this.data, this);
         adapter.setNotesOnClickListener(new NotesOnClickListener() {
             @Override
             public void onNoteClick(View view, int position) {
@@ -55,6 +57,11 @@ public class NotesFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
+
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setChangeDuration(1000);
+        defaultItemAnimator.setRemoveDuration(1000);
+        recyclerView.setItemAnimator(defaultItemAnimator);
 
         return view;
     }
@@ -104,5 +111,26 @@ public class NotesFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        requireActivity().getMenuInflater().inflate(R.menu.card_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapter.getMenuContextClickPosition();
+        switch (item.getItemId()) {
+            case R.id.action_update_from_context:
+
+                return true;
+            case R.id.action_delete_from_context:
+                data.deleteCardData(position);
+                adapter.notifyItemRemoved(position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.geekbrains.notes.R;
@@ -15,8 +16,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     private final CardSource dataSource;
     private NotesOnClickListener listener;
+    private final Fragment fragment;
+    private int menuContextClickPosition;
 
-    public NotesAdapter(CardSource dataSource){ this.dataSource = dataSource; }
+    public int getMenuContextClickPosition() {
+        return menuContextClickPosition;
+    }
+
+    public NotesAdapter(CardSource dataSource, Fragment fragment)
+    {
+        this.dataSource = dataSource;
+        this.fragment = fragment;
+    }
 
     public void setNotesOnClickListener (NotesOnClickListener listener) { this.listener = listener; }
 
@@ -47,10 +58,21 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             this.title = itemView.findViewById(R.id.note_title);
             this.text = itemView.findViewById(R.id.description);
 
+            fragment.registerForContextMenu(this.title);
+
             this.title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onNoteClick(view, getAdapterPosition());
+                }
+            });
+
+            this.title.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    menuContextClickPosition = getAdapterPosition();
+                    title.showContextMenu(0, 0);
+                    return true;
                 }
             });
         }

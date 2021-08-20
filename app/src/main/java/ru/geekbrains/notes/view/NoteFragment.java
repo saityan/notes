@@ -1,4 +1,4 @@
-package ru.geekbrains.notes;
+package ru.geekbrains.notes.view;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import ru.geekbrains.notes.Note;
+import ru.geekbrains.notes.R;
 
 public class NoteFragment extends Fragment {
 

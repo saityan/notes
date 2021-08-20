@@ -1,45 +1,52 @@
-package ru.geekbrains.notes;
+package ru.geekbrains.notes.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import ru.geekbrains.notes.Note;
+import ru.geekbrains.notes.R;
+import ru.geekbrains.notes.card.CardSource;
+import ru.geekbrains.notes.card.CardSourceImplementation;
 
 public class NotesFragment extends Fragment {
 
     Note currentNote;
     boolean isLandscape;
-    public static String KEY_NOTE = "note";
 
     public static NotesFragment newInstance() { return new NotesFragment(); }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-        LinearLayout layout = (LinearLayout) view;
-        String[] notes = getResources().getStringArray(R.array.notes);
+        CardSource data = new CardSourceImplementation(getResources()).init();
 
-        for (int i = 0; i < notes.length; i++) {
-            String name = notes[i];
-            TextView textView = new TextView(getContext());
-            textView.setText(name);
-            textView.setTextSize(30);
-            textView.setGravity(Gravity.END);
-            layout.addView(textView);
-            int finalI = i;
-            textView.setOnClickListener(view1 -> {
-                currentNote = new Note((getResources().getStringArray(R.array.notes)[finalI]),
-                        (getResources().getStringArray(R.array.texts)[finalI]));
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        NotesAdapter notesAdapter = new NotesAdapter(data);
+        notesAdapter.setNotesOnClickListener(new NotesOnClickListener() {
+            @Override
+            public void onNoteClick(View view, int position) {
+                currentNote = new Note(data.getCardData(position).getTitle(),
+                        data.getCardData(position).getText());
                 isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
                 showNote();
-            });
-        }
+            }
+        });
+        recyclerView.setAdapter(notesAdapter);
+
         return view;
     }
 

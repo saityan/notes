@@ -3,6 +3,7 @@ package ru.geekbrains.notes.card;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ru.geekbrains.notes.R;
@@ -50,7 +51,7 @@ public class CardSourceImplementation implements CardSource {
         String[] titles = resources.getStringArray(R.array.notes);
         String[] texts = resources.getStringArray(R.array.texts);
         for (int i = 0; i < titles.length; i++) {
-            dataSource.add(new CardData(titles[i], texts[i]));
+            dataSource.add(new CardData(titles[i], texts[i], Calendar.getInstance().getTime()));
         }
 
         return this;

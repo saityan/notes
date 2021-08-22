@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
+
 import ru.geekbrains.notes.Note;
 import ru.geekbrains.notes.R;
 import ru.geekbrains.notes.card.CardData;
@@ -101,7 +103,7 @@ public class NotesFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_add:
                 this.data.addCardData(new CardData("New " + (this.data.size() + 1),
-                        "New  description " + (this.data.size() + 1)));
+                        "New  description " + (this.data.size() + 1), Calendar.getInstance().getTime()));
                 this.adapter.notifyItemInserted(this.data.size() - 1);
                 this.recyclerView.smoothScrollToPosition(this.data.size() - 1);
                 return true;

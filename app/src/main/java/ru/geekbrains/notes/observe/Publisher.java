@@ -23,6 +23,7 @@ public class Publisher {
     public void notifyTask(CardData cardData) {
         for (Observer observer : observers) {
             observer.updateState(cardData);
+            unsubscribe(observer);
         }
     }
 }

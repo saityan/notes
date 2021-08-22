@@ -1,5 +1,6 @@
 package ru.geekbrains.notes.view;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -19,11 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Calendar;
 
+import ru.geekbrains.notes.MainActivity;
 import ru.geekbrains.notes.Note;
 import ru.geekbrains.notes.R;
 import ru.geekbrains.notes.card.CardData;
 import ru.geekbrains.notes.card.CardSource;
 import ru.geekbrains.notes.card.CardSourceImplementation;
+import ru.geekbrains.notes.observe.Observer;
+import ru.geekbrains.notes.observe.Publisher;
 
 public class NotesFragment extends Fragment {
 
@@ -32,15 +36,22 @@ public class NotesFragment extends Fragment {
     private CardSource data;
     private NotesAdapter adapter;
     private RecyclerView recyclerView;
+    private Navigation navigation;
+    private Publisher publisher;
 
     public static NotesFragment newInstance() { return new NotesFragment(); }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.data = new CardSourceImplementation(getResources()).init();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-        this.data = new CardSourceImplementation(getResources()).init();
 
         this.recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -66,6 +77,21 @@ public class NotesFragment extends Fragment {
         recyclerView.setItemAnimator(defaultItemAnimator);
 
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        MainActivity activity = (MainActivity) context;
+        this.navigation = activity.getNavigation();
+        this.publisher = activity.getPublisher();
+    }
+
+    @Override
+    public void onDetach() {
+        this.navigation = null;
+        this.publisher = null;
+        super.onDetach();
     }
 
     private void showNote() {
@@ -102,10 +128,14 @@ public class NotesFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                this.data.addCardData(new CardData("New " + (this.data.size() + 1),
-                        "New  description " + (this.data.size() + 1), Calendar.getInstance().getTime()));
-                this.adapter.notifyItemInserted(this.data.size() - 1);
-                this.recyclerView.smoothScrollToPosition(this.data.size() - 1);
+                this.navigation.addFragment(CardUpdateFragment.newInstance(), true);
+                this.publisher.subscribe(new Observer() {
+                    @Override
+                    public void updateState(CardData cardData) {
+                        data.addCardData(cardData);
+                        adapter.notifyItemInserted(data.size() - 1);
+                    }
+                });
                 return true;
             case R.id.action_clear:
                 data.clearCardData();
@@ -126,7 +156,14 @@ public class NotesFragment extends Fragment {
         int position = adapter.getMenuContextClickPosition();
         switch (item.getItemId()) {
             case R.id.action_update_from_context:
-
+                navigation.addFragment(CardUpdateFragment.newInstance(data.getCardData(position)), true);
+                publisher.subscribe(new Observer() {
+                    @Override
+                    public void updateState(CardData cardData) {
+                        data.updateCardData(position, cardData);
+                        adapter.notifyItemChanged(position);
+                    }
+                });
                 return true;
             case R.id.action_delete_from_context:
                 data.deleteCardData(position);

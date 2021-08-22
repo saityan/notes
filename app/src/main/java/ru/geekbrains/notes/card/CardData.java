@@ -60,4 +60,8 @@ public class CardData implements Parcelable {
     public void setText(String text) {
         this.text = text;
     }
+
+    public Date getDate() {
+        return date;
+    }
 }

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Publisher publisher = new Publisher();
+    private final Publisher publisher = new Publisher();
     private Navigation navigation;
 
     public Publisher getPublisher() {

@@ -5,4 +5,10 @@
     <string name="openNavDrawer">Navigation Drawer Open</string>
     <string name="closeNavDrawer">Navigation Drawer Close</string>
     <string name="main_menu">MAIN MENU</string>
+    <string name="add">Add</string>
+    <string name="text_clear">Clear</string>
+    <string name="card_delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Description</string>
 </resources>

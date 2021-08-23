@@ -3,10 +3,19 @@ package ru.geekbrains.notes.card;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class CardData implements Parcelable {
 
     private String title;
     private String text;
+    private Date date;
+
+    public CardData(String title, String text, Date date) {
+        this.title = title;
+        this.text = text;
+        this.date = date;
+    }
 
     protected CardData(Parcel in) {
         title = in.readString();
@@ -52,10 +61,7 @@ public class CardData implements Parcelable {
         this.text = text;
     }
 
-    public CardData(String title, String text) {
-        this.title = title;
-        this.text = text;
+    public Date getDate() {
+        return date;
     }
-
-
 }

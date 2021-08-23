@@ -7,10 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import ru.geekbrains.notes.observe.Publisher;
+import ru.geekbrains.notes.view.Navigation;
 import ru.geekbrains.notes.view.NoteFragment;
 import ru.geekbrains.notes.view.NotesFragment;
 
@@ -19,14 +23,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private final Publisher publisher = new Publisher();
+    private Navigation navigation;
+
+    public Publisher getPublisher() {
+        return this.publisher;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public Navigation getNavigation() {
+        return navigation;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.navigation = new Navigation(getSupportFragmentManager());
 
         initSideBar();
 
+        this.navigation.addFragment(NotesFragment.newInstance(), false);
         if(savedInstanceState == null) {
             getSupportFragmentManager().
                     beginTransaction().
@@ -38,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        Fragment backStackFragment = (Fragment)getSupportFragmentManager()
+        Fragment backStackFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.notes_container);
         if(backStackFragment instanceof NoteFragment) {
             onBackPressed();
@@ -69,9 +91,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
-}

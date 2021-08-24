@@ -44,13 +44,6 @@ public class NotesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        this.data = new CardSourceRemoteImplementation().init(new CardsSourceResponse() {
-            @Override
-            public void initialized(CardSource cardSource) {
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
@@ -61,7 +54,6 @@ public class NotesFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         this.adapter = new NotesAdapter(this);
-        adapter.setDataSource(data);
 
         adapter.setNotesOnClickListener(new NotesOnClickListener() {
             @Override
@@ -78,6 +70,14 @@ public class NotesFragment extends Fragment {
         defaultItemAnimator.setChangeDuration(1000);
         defaultItemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(defaultItemAnimator);
+
+        this.data = new CardSourceRemoteImplementation().init(new CardsSourceResponse() {
+            @Override
+            public void initialized(CardSource cardSource) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        adapter.setDataSource(data);
 
         return view;
     }

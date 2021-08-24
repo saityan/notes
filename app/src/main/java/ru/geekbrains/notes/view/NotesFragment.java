@@ -23,7 +23,6 @@ import ru.geekbrains.notes.Note;
 import ru.geekbrains.notes.R;
 import ru.geekbrains.notes.data.CardData;
 import ru.geekbrains.notes.data.CardSource;
-import ru.geekbrains.notes.data.CardSourceLocalImplementation;
 import ru.geekbrains.notes.data.CardSourceRemoteImplementation;
 import ru.geekbrains.notes.data.CardsSourceResponse;
 import ru.geekbrains.notes.observation.Observer;
@@ -83,6 +82,7 @@ public class NotesFragment extends Fragment {
         defaultItemAnimator.setChangeDuration(1000);
         defaultItemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(defaultItemAnimator);
+
         return view;
     }
 

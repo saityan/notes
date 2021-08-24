@@ -19,7 +19,7 @@ public class CardSourceRemoteImplementation implements CardSource {
     private static String CARDS_COLLECTION = "cards";
     private FirebaseFirestore store = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = store.collection(CARDS_COLLECTION);
-    private List<CardData> cardsData;
+    private List<CardData> cardsData = new ArrayList<>();
 
     @Override
     public int size() {

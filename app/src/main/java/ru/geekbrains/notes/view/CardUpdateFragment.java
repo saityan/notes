@@ -121,11 +121,11 @@ public class CardUpdateFragment extends Fragment {
     public void onStop() {
         super.onStop();
         cardData = collectCardData();
-        publisher.notifyTask(cardData);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        publisher.notifyTask(cardData);
     }
 }

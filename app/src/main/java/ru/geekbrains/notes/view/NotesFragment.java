@@ -40,20 +40,16 @@ public class NotesFragment extends Fragment {
 
     public static NotesFragment newInstance() { return new NotesFragment(); }
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         this.data = new CardSourceRemoteImplementation().init(new CardsSourceResponse() {
             @Override
             public void initialized(CardSource cardSource) {
                 adapter.notifyDataSetChanged();
             }
         });
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_notes, container, false);

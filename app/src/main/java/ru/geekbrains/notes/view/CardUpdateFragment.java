@@ -18,8 +18,8 @@ import java.util.Date;
 
 import ru.geekbrains.notes.MainActivity;
 import ru.geekbrains.notes.R;
-import ru.geekbrains.notes.card.CardData;
-import ru.geekbrains.notes.observe.Publisher;
+import ru.geekbrains.notes.data.CardData;
+import ru.geekbrains.notes.observation.Publisher;
 
 public class CardUpdateFragment extends Fragment {
 
@@ -100,6 +100,12 @@ public class CardUpdateFragment extends Fragment {
         String title = this.title.getText().toString();
         String description = this.description.getText().toString();
         Date date = getDateFromDatePicker();
+        if(cardData != null) {
+            cardData.setTitle(title);
+            cardData.setText(description);
+            cardData.setDate(date);
+            return cardData;
+        }
         return new CardData(title, description, date);
     }
 

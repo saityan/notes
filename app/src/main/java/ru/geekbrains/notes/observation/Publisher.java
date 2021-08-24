@@ -1,9 +1,9 @@
-package ru.geekbrains.notes.observe;
+package ru.geekbrains.notes.observation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.geekbrains.notes.card.CardData;
+import ru.geekbrains.notes.data.CardData;
 
 public class Publisher {
     private List<Observer> observers;

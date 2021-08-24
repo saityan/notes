@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.geekbrains.notes.R;
-import ru.geekbrains.notes.card.CardSource;
+import ru.geekbrains.notes.data.CardSource;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
-    private final CardSource dataSource;
+    private CardSource dataSource;
     private NotesOnClickListener listener;
     private final Fragment fragment;
     private int menuContextClickPosition;
@@ -23,9 +23,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         return menuContextClickPosition;
     }
 
-    public NotesAdapter(CardSource dataSource, Fragment fragment)
+    public NotesAdapter(Fragment fragment)
     {
-        this.dataSource = dataSource;
         this.fragment = fragment;
     }
 
@@ -77,4 +76,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             });
         }
     }
+
+    public void setDataSource(CardSource dataSource) {
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
+    }
+
 }

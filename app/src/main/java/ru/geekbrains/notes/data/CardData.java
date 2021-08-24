@@ -1,4 +1,4 @@
-package ru.geekbrains.notes.card;
+package ru.geekbrains.notes.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,8 +7,10 @@ import java.util.Date;
 
 public class CardData implements Parcelable {
 
+    private String id;
     private String title;
     private String text;
+
     private Date date;
 
     public CardData(String title, String text, Date date) {
@@ -63,5 +65,18 @@ public class CardData implements Parcelable {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

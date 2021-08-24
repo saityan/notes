@@ -18,16 +18,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Calendar;
-
 import ru.geekbrains.notes.MainActivity;
 import ru.geekbrains.notes.Note;
 import ru.geekbrains.notes.R;
-import ru.geekbrains.notes.card.CardData;
-import ru.geekbrains.notes.card.CardSource;
-import ru.geekbrains.notes.card.CardSourceImplementation;
-import ru.geekbrains.notes.observe.Observer;
-import ru.geekbrains.notes.observe.Publisher;
+import ru.geekbrains.notes.data.CardData;
+import ru.geekbrains.notes.data.CardSource;
+import ru.geekbrains.notes.data.CardSourceRemoteImplementation;
+import ru.geekbrains.notes.data.CardsSourceResponse;
+import ru.geekbrains.notes.observation.Observer;
+import ru.geekbrains.notes.observation.Publisher;
 
 public class NotesFragment extends Fragment {
 
@@ -44,12 +43,18 @@ public class NotesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.data = new CardSourceImplementation(getResources()).init();
+        this.data = new CardSourceRemoteImplementation().init(new CardsSourceResponse() {
+            @Override
+            public void initialized(CardSource cardSource) {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
 
@@ -59,7 +64,9 @@ public class NotesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        this.adapter = new NotesAdapter(this.data, this);
+        this.adapter = new NotesAdapter(this);
+        adapter.setDataSource(data);
+
         adapter.setNotesOnClickListener(new NotesOnClickListener() {
             @Override
             public void onNoteClick(View view, int position) {

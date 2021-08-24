@@ -1,4 +1,4 @@
-package ru.geekbrains.notes.card;
+package ru.geekbrains.notes.data;
 
 import android.content.res.Resources;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 import ru.geekbrains.notes.R;
 
-public class CardSourceImplementation implements CardSource {
+public class CardSourceLocalImplementation implements CardSource {
     private List<CardData> dataSource;
     private final Resources resources;
 
@@ -42,16 +42,22 @@ public class CardSourceImplementation implements CardSource {
         dataSource.clear();
     }
 
-    public CardSourceImplementation(Resources resources) {
+    public CardSourceLocalImplementation(Resources resources) {
         this.resources = resources;
     }
 
-    public CardSourceImplementation init() {
+    @Override
+    public CardSource init(CardsSourceResponse cardsSourceResponse) {
         dataSource = new ArrayList<>();
         String[] titles = resources.getStringArray(R.array.notes);
         String[] texts = resources.getStringArray(R.array.texts);
+
         for (int i = 0; i < titles.length; i++) {
             dataSource.add(new CardData(titles[i], texts[i], Calendar.getInstance().getTime()));
+        }
+
+        if(cardsSourceResponse != null) {
+            cardsSourceResponse.initialized(this);
         }
 
         return this;

@@ -47,12 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initSideBar();
 
         this.navigation.addFragment(NotesFragment.newInstance(), false);
-        if(savedInstanceState == null) {
-            getSupportFragmentManager().
-                    beginTransaction().
-                    replace(R.id.notes_container, NotesFragment.newInstance())
-                    .commit();
-        }
     }
 
     @Override

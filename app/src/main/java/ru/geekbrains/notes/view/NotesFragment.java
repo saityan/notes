@@ -1,8 +1,11 @@
 package ru.geekbrains.notes.view;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,9 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -174,8 +180,11 @@ public class NotesFragment extends Fragment {
                 DialogueDelete dialogueDelete = new DialogueDelete();
                 dialogueDelete.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                         "deletion check");
-                //data.deleteCardData(position);
-                //adapter.notifyItemRemoved(position);
+                if (dialogueDelete.isYes()) {
+                    Toast.makeText(getContext(), "deleted", Toast.LENGTH_SHORT).show();
+                    data.deleteCardData(position);
+                    adapter.notifyItemRemoved(position);
+                }
                 return true;
         }
         return super.onContextItemSelected(item);

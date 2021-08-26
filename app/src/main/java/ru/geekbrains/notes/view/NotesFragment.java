@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
 import ru.geekbrains.notes.MainActivity;
 import ru.geekbrains.notes.Note;
 import ru.geekbrains.notes.R;
@@ -169,8 +171,11 @@ public class NotesFragment extends Fragment {
                 });
                 return true;
             case R.id.action_delete_from_context:
-                data.deleteCardData(position);
-                adapter.notifyItemRemoved(position);
+                DialogueDelete dialogueDelete = new DialogueDelete();
+                dialogueDelete.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
+                        "deletion check");
+                //data.deleteCardData(position);
+                //adapter.notifyItemRemoved(position);
                 return true;
         }
         return super.onContextItemSelected(item);

@@ -177,14 +177,9 @@ public class NotesFragment extends Fragment {
                 });
                 return true;
             case R.id.action_delete_from_context:
-                DialogueDelete dialogueDelete = new DialogueDelete();
+                DialogueDelete dialogueDelete = new DialogueDelete(data, position, adapter);
                 dialogueDelete.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                         "deletion check");
-                if (dialogueDelete.isYes()) {
-                    Toast.makeText(getContext(), "deleted", Toast.LENGTH_SHORT).show();
-                    //data.deleteCardData(position);
-                    //adapter.notifyItemRemoved(position);
-                }
                 return true;
         }
         return super.onContextItemSelected(item);

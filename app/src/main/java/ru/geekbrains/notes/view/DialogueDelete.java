@@ -9,12 +9,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import ru.geekbrains.notes.data.CardSource;
+
 public class DialogueDelete extends DialogFragment {
 
-    private static boolean isYes;
+    private final CardSource data;
+    private final int position;
+    private final NotesAdapter adapter;
 
-    public boolean isYes() {
-        return isYes;
+    DialogueDelete(CardSource data, int position, NotesAdapter adapter) {
+        this.data = data;
+        this.position = position;
+        this.adapter = adapter;
     }
 
     @NonNull
@@ -25,14 +31,14 @@ public class DialogueDelete extends DialogFragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        isYes = true;
+                        data.deleteCardData(position);
+                        adapter.notifyItemRemoved(position);
                         dismiss();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        isYes = false;
                         dismiss();
                     }
                 });

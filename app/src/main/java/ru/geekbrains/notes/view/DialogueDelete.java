@@ -36,7 +36,7 @@ public class DialogueDelete extends DialogFragment {
                         dismiss();
                     }
                 });
-
+        setCancelable(false);
         return builder.create();
     }
 }

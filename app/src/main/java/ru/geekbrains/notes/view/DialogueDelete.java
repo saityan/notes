@@ -11,14 +11,10 @@ import androidx.fragment.app.DialogFragment;
 
 public class DialogueDelete extends DialogFragment {
 
-    private boolean isYes = false;
+    private static boolean isYes;
 
     public boolean isYes() {
         return isYes;
-    }
-
-    private void setYes() {
-        isYes = true;
     }
 
     @NonNull
@@ -29,14 +25,14 @@ public class DialogueDelete extends DialogFragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DialogueDelete.this.setYes();
+                        isYes = true;
                         dismiss();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        boolean decisionDelete = false; // Just in case
+                        isYes = false;
                         dismiss();
                     }
                 });

@@ -182,8 +182,8 @@ public class NotesFragment extends Fragment {
                         "deletion check");
                 if (dialogueDelete.isYes()) {
                     Toast.makeText(getContext(), "deleted", Toast.LENGTH_SHORT).show();
-                    data.deleteCardData(position);
-                    adapter.notifyItemRemoved(position);
+                    //data.deleteCardData(position);
+                    //adapter.notifyItemRemoved(position);
                 }
                 return true;
         }

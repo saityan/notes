@@ -117,7 +117,7 @@ public class NotesFragment extends Fragment {
         requireActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.notes_container, NoteFragment.newInstance(currentNote))
+                .replace(R.id.notes_container, NoteFragment.Companion.newInstance(currentNote))
                 .addToBackStack("")
                 .commit();
     }
@@ -126,7 +126,7 @@ public class NotesFragment extends Fragment {
         requireActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.note_container, NoteFragment.newInstance(currentNote))
+                .replace(R.id.note_container, NoteFragment.Companion.newInstance(currentNote))
                 .commit();
     }
 

@@ -139,7 +139,7 @@ public class NotesFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                this.navigation.addFragment(CardUpdateFragment.newInstance(), true);
+                this.navigation.addFragment(CardUpdateFragment.Companion.newInstance(), true);
                 this.publisher.subscribe(new Observer() {
                     @Override
                     public void updateState(CardData cardData) {
@@ -167,7 +167,7 @@ public class NotesFragment extends Fragment {
         int position = adapter.getMenuContextClickPosition();
         switch (item.getItemId()) {
             case R.id.action_update_from_context:
-                navigation.addFragment(CardUpdateFragment.newInstance(data.getCardData(position)), true);
+                navigation.addFragment(CardUpdateFragment.Companion.newInstance(data.getCardData(position)), true);
                 publisher.subscribe(new Observer() {
                     @Override
                     public void updateState(CardData cardData) {

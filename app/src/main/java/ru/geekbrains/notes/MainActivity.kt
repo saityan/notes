@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.string.openNavDrawer,
             R.string.closeNavDrawer
         )
-        /*drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        drawerLayout?.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        navigationView.setNavigationItemSelectedListener(this)*/
+        navigationView?.setNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

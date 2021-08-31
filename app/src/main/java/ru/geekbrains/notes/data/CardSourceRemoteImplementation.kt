@@ -11,11 +11,11 @@ class CardSourceRemoteImplementation : CardSource {
         return cardsData.size
     }
 
-    override fun getCardData(position: Int): CardData? {
+    override fun getCardData(position: Int): CardData {
         return cardsData[position]
     }
 
-    override fun init(cardsSourceResponse: CardsSourceResponse?): CardSource? {
+    override fun init(cardsSourceResponse: CardsSourceResponse?): CardSource {
         collectionReference.orderBy(CardDataTranslate.Fields.DATE, Query.Direction.DESCENDING).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -34,11 +34,11 @@ class CardSourceRemoteImplementation : CardSource {
     }
 
     override fun deleteCardData(position: Int) {
-        collectionReference.document(cardsData[position].id).delete()
+        collectionReference.document(cardsData[position].id!!).delete()
     }
 
     override fun updateCardData(position: Int, newCardData: CardData?) {
-        collectionReference.document(cardsData[position].id).update(
+        collectionReference.document(cardsData[position].id!!).update(
             CardDataTranslate
                 .cardDataToDocument(newCardData)
         )
@@ -50,7 +50,7 @@ class CardSourceRemoteImplementation : CardSource {
 
     override fun clearCardData() {
         for (cardData in cardsData) {
-            collectionReference.document(cardData.id).delete()
+            collectionReference.document(cardData.id!!).delete()
         }
     }
 

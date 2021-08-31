@@ -17,13 +17,13 @@ object CardDataTranslate {
     fun cardDataToDocument(cardData: CardData?): Map<String, Any> {
         val result: MutableMap<String, Any> = HashMap()
         if (cardData != null) {
-            result[Fields.TITLE] = cardData.title
+            result[Fields.TITLE] = cardData.title!!
         }
         if (cardData != null) {
-            result[Fields.DESCRIPTION] = cardData.text
+            result[Fields.DESCRIPTION] = cardData.text!!
         }
         if (cardData != null) {
-            result[Fields.DATE] = cardData.date
+            result[Fields.DATE] = cardData.date!!
         }
         return result
     }

@@ -57,7 +57,7 @@ class CardUpdateFragment : Fragment() {
     private fun populateView() {
         title!!.setText(cardData!!.title)
         description!!.setText(cardData!!.text)
-        initDatePicker(cardData!!.date)
+        initDatePicker(cardData!!.date!!)
     }
 
     private fun initDatePicker(date: Date) {

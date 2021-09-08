@@ -149,10 +149,10 @@ class NotesFragment : Fragment() {
                 return true
             }
             R.id.action_delete_from_context -> {
-                val dialogueDelete = DialogueDelete(
-                    data!!, position,
-                    adapter!!
-                )
+                val dialogueDelete = DialogueDelete()
+                DialogueDelete.data = data!!
+                DialogueDelete.position = position
+                DialogueDelete.adapter = adapter!!
                 dialogueDelete.show(
                     Objects.requireNonNull(activity)!!.supportFragmentManager,
                     "deletion check"

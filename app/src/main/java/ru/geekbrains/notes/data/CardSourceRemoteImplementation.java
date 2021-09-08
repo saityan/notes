@@ -54,6 +54,7 @@ public class CardSourceRemoteImplementation implements CardSource {
     @Override
     public void deleteCardData(int position) {
         collectionReference.document(cardsData.get(position).getId()).delete();
+        cardsData.remove(position);
     }
 
     @Override

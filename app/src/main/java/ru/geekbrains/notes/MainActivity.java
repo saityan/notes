@@ -1,6 +1,7 @@
 package ru.geekbrains.notes;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +14,9 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import ru.geekbrains.notes.data.CardSource;
+import ru.geekbrains.notes.data.CardSourceRemoteImplementation;
+import ru.geekbrains.notes.data.CardsSourceResponse;
 import ru.geekbrains.notes.observation.Publisher;
 import ru.geekbrains.notes.view.Navigation;
 import ru.geekbrains.notes.view.NoteFragment;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return this.publisher;
     }
 
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -40,6 +45,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return navigation;
     }
 
+    NotesFragment notesFragment;
+    // Метод для общения с диалоговыми окнами
+    public void onDialogResult(boolean resultDialog){
+        if(resultDialog){
+            notesFragment.delete(candidate);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("candidate",candidate);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState!=null){
+            candidate = savedInstanceState.getInt("candidate",-2);
+            candidate = savedInstanceState.getInt("candidate",-2);
+        }
+    }
+
+    public int candidate=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +76,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initSideBar();
 
-        this.navigation.addFragment(NotesFragment.newInstance(), false);
+            notesFragment= NotesFragment.newInstance();
+            this.navigation.addFragment(notesFragment, false);
+
     }
 
     @Override

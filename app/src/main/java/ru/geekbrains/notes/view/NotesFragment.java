@@ -1,6 +1,7 @@
 package ru.geekbrains.notes.view;
 
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
@@ -177,11 +178,19 @@ public class NotesFragment extends Fragment {
                 });
                 return true;
             case R.id.action_delete_from_context:
-                DialogueDelete dialogueDelete = new DialogueDelete(data, position, adapter);
+                DialogueDelete dialogueDelete = new DialogueDelete();
+               ((MainActivity)getActivity()).candidate = position;
+                //dialogueDelete.init(data, position, adapter);
                 dialogueDelete.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                         "deletion check");
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+
+    public void delete(int candidate) {
+        data.deleteCardData(candidate);
+        adapter.notifyDataSetChanged();
     }
 }

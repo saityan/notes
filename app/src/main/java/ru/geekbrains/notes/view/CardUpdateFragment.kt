@@ -23,7 +23,7 @@ class CardUpdateFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            cardData = arguments!!.getParcelable(ARG_CARD_DATA)
+            cardData = requireArguments().getParcelable(ARG_CARD_DATA)
         }
     }
 

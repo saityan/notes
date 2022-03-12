@@ -1,36 +1,35 @@
 package ru.geekbrains.notes.data
 
+import android.util.Log
 import com.google.firebase.Timestamp
 import java.util.*
 
 object CardDataTranslate {
-    fun documentToCardData(id: String?, doc: Map<String?, Any?>): CardData {
-        val result = CardData(
-            doc[Fields.TITLE] as String?,
-            doc[Fields.DESCRIPTION] as String?,
+    fun documentToCardData(id: String, doc: Map<String, Any?>): CardData {
+        return CardData(
+            id,
+            doc[Fields.TITLE] as String,
+            doc[Fields.TEXT] as String,
             (Objects.requireNonNull(doc[Fields.DATE]) as Timestamp).toDate()
         )
-        result.id = id
-        return result
     }
 
     fun cardDataToDocument(cardData: CardData?): Map<String, Any> {
+        Log.d("myLogs", "cardDataToDocument")
         val result: MutableMap<String, Any> = HashMap()
         if (cardData != null) {
-            result[Fields.TITLE] = cardData.title!!
-        }
-        if (cardData != null) {
-            result[Fields.DESCRIPTION] = cardData.text!!
-        }
-        if (cardData != null) {
-            result[Fields.DATE] = cardData.date!!
+            Log.d("myLogs", "cardData")
+            result[Fields.TITLE] = cardData.title
+            result[Fields.TEXT] = cardData.text
+            result[Fields.DATE] = cardData.date
         }
         return result
     }
 
     object Fields {
+        const val ID = "id"
         const val TITLE = "title"
-        const val DESCRIPTION = "description"
+        const val TEXT = "description"
         const val DATE = "date"
     }
 }

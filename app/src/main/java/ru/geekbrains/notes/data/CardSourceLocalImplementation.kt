@@ -36,7 +36,8 @@ class CardSourceLocalImplementation(private val resources: Resources) :
         val titles = resources.getStringArray(R.array.notes)
         val texts = resources.getStringArray(R.array.texts)
         for (i in titles.indices) {
-            (dataSource as ArrayList<CardData?>).add(CardData(titles[i], texts[i], Calendar.getInstance().time))
+            (dataSource as ArrayList<CardData?>).add(CardData(
+                i.toString(), titles[i], texts[i], Calendar.getInstance().time))
         }
         cardsSourceResponse?.initialized(this)
         return this

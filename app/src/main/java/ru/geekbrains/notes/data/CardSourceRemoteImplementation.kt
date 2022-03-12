@@ -1,12 +1,16 @@
 package ru.geekbrains.notes.data
 
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.util.*
 
 class CardSourceRemoteImplementation : CardSource {
-    private val store = FirebaseFirestore.getInstance()
-    private val collectionReference = store.collection(CARDS_COLLECTION)
-    private var cardsData: MutableList<CardData> = ArrayList()
+    private val collectionReference = FirebaseFirestore.getInstance().collection(CARDS_COLLECTION)
+    companion object {
+        private const val CARDS_COLLECTION = "cards"
+        private var cardsData: MutableList<CardData> = ArrayList()
+    }
+
     override fun size(): Int {
         return cardsData.size
     }
@@ -16,29 +20,29 @@ class CardSourceRemoteImplementation : CardSource {
     }
 
     override fun init(cardsSourceResponse: CardsSourceResponse?): CardSource {
-        collectionReference.orderBy(CardDataTranslate.Fields.DATE, Query.Direction.DESCENDING).get()
+        collectionReference.orderBy(CardDataTranslate.Fields.DATE, Query.Direction.ASCENDING).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     cardsData = ArrayList()
-                    for (docFields in Objects.requireNonNull(task.result)!!) {
+                    for (docFields in Objects.requireNonNull(task.result)) {
                         val cardData = CardDataTranslate.documentToCardData(
                             docFields.id,
                             docFields.data
                         )
                         cardsData.add(cardData)
                     }
-                    cardsSourceResponse!!.initialized(this@CardSourceRemoteImplementation)
+                    cardsSourceResponse?.initialized(this@CardSourceRemoteImplementation)
                 }
             }
         return this
     }
 
     override fun deleteCardData(position: Int) {
-        collectionReference.document(cardsData[position].id!!).delete()
+        collectionReference.document(cardsData[position].id).delete()
     }
 
     override fun updateCardData(position: Int, newCardData: CardData?) {
-        collectionReference.document(cardsData[position].id!!).update(
+        collectionReference.document(cardsData[position].id).update(
             CardDataTranslate
                 .cardDataToDocument(newCardData)
         )
@@ -50,11 +54,7 @@ class CardSourceRemoteImplementation : CardSource {
 
     override fun clearCardData() {
         for (cardData in cardsData) {
-            collectionReference.document(cardData.id!!).delete()
+            collectionReference.document(cardData.id).delete()
         }
-    }
-
-    companion object {
-        private const val CARDS_COLLECTION = "cards"
     }
 }

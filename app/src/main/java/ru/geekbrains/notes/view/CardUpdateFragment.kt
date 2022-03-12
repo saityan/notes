@@ -81,7 +81,7 @@ class CardUpdateFragment : Fragment() {
             cardData!!.date = date
             return cardData as CardData
         }
-        return CardData(title, description, date)
+        return CardData("", title, description, date)
     }
 
     private val dateFromDatePicker: Date
@@ -100,7 +100,7 @@ class CardUpdateFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        publisher!!.notifyTask(cardData)
+        publisher!!.notifyTask(cardData!!)
     }
 
     companion object {

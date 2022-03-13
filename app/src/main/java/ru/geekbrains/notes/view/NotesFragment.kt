@@ -10,26 +10,22 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.notes.MainActivity
-import ru.geekbrains.notes.data.Note
 import ru.geekbrains.notes.R
-import ru.geekbrains.notes.data.CardData
-import ru.geekbrains.notes.data.CardSource
-import ru.geekbrains.notes.data.CardSourceRemoteImplementation
-import ru.geekbrains.notes.data.CardsSourceResponse
+import ru.geekbrains.notes.data.*
 import ru.geekbrains.notes.observation.Observer
 import ru.geekbrains.notes.observation.Publisher
 import ru.geekbrains.notes.view.CardUpdateFragment.Companion.newInstance
 import ru.geekbrains.notes.view.NoteFragment.Companion.newInstance
-import java.util.*
 
 class NotesFragment : Fragment() {
-    var currentNote: Note? = null
+    var currentNote: Note = Note()
     var isLandscape = false
-    private var data: CardSource? = null
-    private var adapter: NotesAdapter? = null
-    private var recyclerView: RecyclerView? = null
-    private var navigation: Navigation? = null
-    private var publisher: Publisher? = null
+    private lateinit var data: CardSource
+    private lateinit var adapter: NotesAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var navigation: Navigation
+    private lateinit var publisher: Publisher
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,46 +34,40 @@ class NotesFragment : Fragment() {
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_notes, container, false)
         recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView!!.setHasFixedSize(true)
+        recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(context)
-        recyclerView!!.setLayoutManager(linearLayoutManager)
+        recyclerView.layoutManager = linearLayoutManager
         adapter = NotesAdapter(this)
-        adapter!!.setNotesOnClickListener(object : NotesOnClickListener {
+        adapter.setNotesOnClickListener(object : NotesOnClickListener {
             override fun onNoteClick(view: View, position: Int) {
                 currentNote = Note(
-                    data!!.getCardData(position)!!.title,
-                    data!!.getCardData(position)!!.text
+                    data.getCardData(position).title,
+                    data.getCardData(position).text
                 )
                 isLandscape =
                     resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
                 showNote()
             }
         })
-        recyclerView!!.setAdapter(adapter)
+        recyclerView.adapter = adapter
         val defaultItemAnimator = DefaultItemAnimator()
         defaultItemAnimator.changeDuration = 1000
         defaultItemAnimator.removeDuration = 1000
-        recyclerView!!.setItemAnimator(defaultItemAnimator)
+        recyclerView.itemAnimator = defaultItemAnimator
         data = CardSourceRemoteImplementation().init(object : CardsSourceResponse {
             override fun initialized(cardSource: CardSource) {
-                adapter!!.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         })
-        adapter!!.setDataSource(data)
+        adapter.setDataSource(data)
         return view
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val activity = context as MainActivity
-        navigation = activity.navigation
+        activity.navigation?.let {  navigation = it }
         publisher = activity.publisher
-    }
-
-    override fun onDetach() {
-        navigation = null
-        publisher = null
-        super.onDetach()
     }
 
     private fun showNote() {
@@ -112,18 +102,18 @@ class NotesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                navigation!!.addFragment(CardUpdateFragment.newInstance(), true)
-                publisher!!.subscribe(object : Observer {
+                navigation.addFragment(CardUpdateFragment.newInstance(), true)
+                publisher.subscribe(object : Observer {
                     override fun updateState(cardData: CardData) {
-                        data!!.addCardData(cardData)
-                        adapter!!.notifyItemInserted(data!!.size() - 1)
+                        data.addCardData(cardData)
+                        adapter.notifyDataSetChanged()
                     }
                 })
                 return true
             }
             R.id.action_clear -> {
-                data!!.clearCardData()
-                adapter!!.notifyDataSetChanged()
+                data.clearCardData()
+                adapter.notifyDataSetChanged()
                 return true
             }
         }
@@ -136,23 +126,23 @@ class NotesFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val position = adapter!!.menuContextClickPosition
+        val position = adapter.menuContextClickPosition
         when (item.itemId) {
             R.id.action_update_from_context -> {
-                navigation!!.addFragment(data!!.getCardData(position)?.let { newInstance(it) }, true)
-                publisher!!.subscribe(object : Observer {
+                navigation.addFragment(data.getCardData(position)?.let { newInstance(it) }, true)
+                publisher.subscribe(object : Observer {
                     override fun updateState(cardData: CardData) {
-                        data!!.updateCardData(position, cardData)
-                        adapter!!.notifyItemChanged(position)
+                        data.updateCardData(position, cardData)
+                        adapter.notifyItemChanged(position)
                     }
                 })
                 return true
             }
             R.id.action_delete_from_context -> {
                 val dialogueDelete = DialogueDelete()
-                DialogueDelete.data = data!!
+                DialogueDelete.data = data
                 DialogueDelete.position = position
-                DialogueDelete.adapter = adapter!!
+                DialogueDelete.adapter = adapter
                 dialogueDelete.show(
                     requireActivity().supportFragmentManager,
                     "deletion check"

@@ -11,6 +11,9 @@ data class Note(
     val creationDate: String?,
     var dueDate: String?
 ) : Parcelable {
+
+    constructor() : this("", "", Calendar.getInstance().time.toString(), "")
+
     constructor(title: String?, text: String?) :
             this(title, text, Calendar.getInstance().time.toString(), "")
 }

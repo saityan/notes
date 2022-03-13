@@ -11,7 +11,7 @@ import ru.geekbrains.notes.data.Note
 import ru.geekbrains.notes.R
 
 class NoteFragment : Fragment() {
-    private var note: Note? = null
+    private var note = Note()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,8 +20,8 @@ class NoteFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_note, container, false)
         val titleView = view.findViewById<TextView>(R.id.title_view)
         val textView = view.findViewById<TextView>(R.id.text_view)
-        titleView.text = note!!.title
-        textView.text = note!!.text
+        titleView.text = note.title
+        textView.text = note.text
         titleView.setTypeface(null, Typeface.BOLD)
         textView.setTypeface(null, Typeface.ITALIC)
         return view
@@ -29,7 +29,8 @@ class NoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) note = requireArguments().getParcelable(KEY_NOTE)
+        if (arguments != null)
+            requireArguments().getParcelable<Note>(KEY_NOTE)?.let { note = it }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

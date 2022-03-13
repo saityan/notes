@@ -11,8 +11,8 @@ class CardSourceLocalImplementation(private val resources: Resources) :
         return dataSource!!.size
     }
 
-    override fun getCardData(position: Int): CardData? {
-        return dataSource!![position]
+    override fun getCardData(position: Int): CardData {
+        return dataSource!![position]!!
     }
 
     override fun deleteCardData(position: Int) {

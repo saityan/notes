@@ -154,7 +154,7 @@ class NotesFragment : Fragment() {
                 DialogueDelete.position = position
                 DialogueDelete.adapter = adapter!!
                 dialogueDelete.show(
-                    Objects.requireNonNull(activity)!!.supportFragmentManager,
+                    requireActivity().supportFragmentManager,
                     "deletion check"
                 )
                 return true

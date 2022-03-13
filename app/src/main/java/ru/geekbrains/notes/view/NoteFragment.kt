@@ -29,7 +29,7 @@ class NoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) note = arguments!!.getParcelable(KEY_NOTE)
+        if (arguments != null) note = requireArguments().getParcelable(KEY_NOTE)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

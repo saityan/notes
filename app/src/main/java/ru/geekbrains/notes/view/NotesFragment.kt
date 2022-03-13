@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.notes.MainActivity
-import ru.geekbrains.notes.Note
+import ru.geekbrains.notes.data.Note
 import ru.geekbrains.notes.R
 import ru.geekbrains.notes.data.CardData
 import ru.geekbrains.notes.data.CardSource

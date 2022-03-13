@@ -13,6 +13,7 @@ class DialogueDelete : DialogFragment() {
         var position: Int = -1
         lateinit var adapter: NotesAdapter
     }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
             .setTitle("Are you sure you want to delete this note?")

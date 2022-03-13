@@ -15,26 +15,22 @@ import ru.geekbrains.notes.observation.Publisher
 import java.util.*
 
 class CardUpdateFragment : Fragment() {
-    private var cardData: CardData? = null
-    private var publisher: Publisher? = null
-    private var title: TextInputEditText? = null
-    private var description: TextInputEditText? = null
-    private var datePicker: DatePicker? = null
+    private var cardData = CardData()
+    private lateinit var publisher: Publisher
+    private lateinit var title: TextInputEditText
+    private lateinit var description: TextInputEditText
+    private lateinit var datePicker: DatePicker
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            cardData = requireArguments().getParcelable(ARG_CARD_DATA)
+            requireArguments().getParcelable<CardData>(ARG_CARD_DATA)?.let { cardData = it }
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         publisher = (context as MainActivity).publisher
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        publisher = null
     }
 
     override fun onCreateView(
@@ -44,7 +40,7 @@ class CardUpdateFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_update_card, container, false)
         initView(view)
-        if (cardData != null) populateView()
+        populateView()
         return view
     }
 
@@ -55,15 +51,15 @@ class CardUpdateFragment : Fragment() {
     }
 
     private fun populateView() {
-        title!!.setText(cardData!!.title)
-        description!!.setText(cardData!!.text)
-        initDatePicker(cardData!!.date!!)
+        title.setText(cardData.title)
+        description.setText(cardData.text)
+        initDatePicker(cardData.date)
     }
 
     private fun initDatePicker(date: Date) {
         val calendar = Calendar.getInstance()
         calendar.time = date
-        datePicker!!.init(
+        datePicker.init(
             calendar[Calendar.YEAR],
             calendar[Calendar.MONTH],
             calendar[Calendar.DAY_OF_MONTH],
@@ -72,24 +68,21 @@ class CardUpdateFragment : Fragment() {
     }
 
     private fun collectCardData(): CardData {
-        val title = title!!.text.toString()
-        val description = description!!.text.toString()
+        val title = title.text.toString()
+        val description = description.text.toString()
         val date = dateFromDatePicker
-        if (cardData != null) {
-            cardData!!.title = title
-            cardData!!.text = description
-            cardData!!.date = date
-            return cardData as CardData
-        }
-        return CardData("", title, description, date)
+        cardData.title = title
+        cardData.text = description
+        cardData.date = date
+        return cardData
     }
 
     private val dateFromDatePicker: Date
         get() {
             val cal = Calendar.getInstance()
-            cal[Calendar.YEAR] = datePicker!!.year
-            cal[Calendar.MONTH] = datePicker!!.month
-            cal[Calendar.DAY_OF_MONTH] = datePicker!!.dayOfMonth
+            cal[Calendar.YEAR] = datePicker.year
+            cal[Calendar.MONTH] = datePicker.month
+            cal[Calendar.DAY_OF_MONTH] = datePicker.dayOfMonth
             return cal.time
         }
 
@@ -100,12 +93,12 @@ class CardUpdateFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        publisher!!.notifyTask(cardData!!)
+        publisher.notifyTask(cardData)
     }
 
     companion object {
         private const val ARG_CARD_DATA = "Param_CardData"
-        fun newInstance(cardData: CardData?): CardUpdateFragment {
+        fun newInstance(cardData: CardData): CardUpdateFragment {
             val fragment = CardUpdateFragment()
             val args = Bundle()
             args.putParcelable(ARG_CARD_DATA, cardData)

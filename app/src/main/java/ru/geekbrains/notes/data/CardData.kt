@@ -10,4 +10,6 @@ data class CardData (
     var title: String,
     var text: String,
     var date: Date
-) : Parcelable
+) : Parcelable {
+    constructor() : this ("","","", Date())
+}

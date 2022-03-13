@@ -139,7 +139,7 @@ class NotesFragment : Fragment() {
         val position = adapter!!.menuContextClickPosition
         when (item.itemId) {
             R.id.action_update_from_context -> {
-                navigation!!.addFragment(newInstance(data!!.getCardData(position)), true)
+                navigation!!.addFragment(data!!.getCardData(position)?.let { newInstance(it) }, true)
                 publisher!!.subscribe(object : Observer {
                     override fun updateState(cardData: CardData) {
                         data!!.updateCardData(position, cardData)

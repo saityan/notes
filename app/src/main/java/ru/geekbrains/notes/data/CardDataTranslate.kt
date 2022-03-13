@@ -1,6 +1,5 @@
 package ru.geekbrains.notes.data
 
-import android.util.Log
 import com.google.firebase.Timestamp
 import java.util.*
 
@@ -15,10 +14,8 @@ object CardDataTranslate {
     }
 
     fun cardDataToDocument(cardData: CardData?): Map<String, Any> {
-        Log.d("myLogs", "cardDataToDocument")
         val result: MutableMap<String, Any> = HashMap()
         if (cardData != null) {
-            Log.d("myLogs", "cardData")
             result[Fields.TITLE] = cardData.title
             result[Fields.TEXT] = cardData.text
             result[Fields.DATE] = cardData.date

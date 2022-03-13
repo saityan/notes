@@ -24,7 +24,6 @@ object CardDataTranslate {
     }
 
     object Fields {
-        const val ID = "id"
         const val TITLE = "title"
         const val TEXT = "description"
         const val DATE = "date"

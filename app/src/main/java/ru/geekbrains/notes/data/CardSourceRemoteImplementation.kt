@@ -41,14 +41,14 @@ class CardSourceRemoteImplementation : CardSource {
         collectionReference.document(cardsData[position].id).delete()
     }
 
-    override fun updateCardData(position: Int, newCardData: CardData?) {
+    override fun updateCardData(position: Int, newCardData: CardData) {
         collectionReference.document(cardsData[position].id).update(
             CardDataTranslate
                 .cardDataToDocument(newCardData)
         )
     }
 
-    override fun addCardData(newCardData: CardData?) {
+    override fun addCardData(newCardData: CardData) {
         collectionReference.add(CardDataTranslate.cardDataToDocument(newCardData))
     }
 

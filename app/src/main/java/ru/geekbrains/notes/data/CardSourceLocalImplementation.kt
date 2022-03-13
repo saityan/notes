@@ -19,11 +19,11 @@ class CardSourceLocalImplementation(private val resources: Resources) :
         dataSource!!.removeAt(position)
     }
 
-    override fun updateCardData(position: Int, newCardData: CardData?) {
+    override fun updateCardData(position: Int, newCardData: CardData) {
         dataSource!![position] = newCardData
     }
 
-    override fun addCardData(newCardData: CardData?) {
+    override fun addCardData(newCardData: CardData) {
         dataSource!!.add(newCardData)
     }
 

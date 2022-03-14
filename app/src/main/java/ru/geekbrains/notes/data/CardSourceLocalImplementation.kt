@@ -31,7 +31,7 @@ class CardSourceLocalImplementation(private val resources: Resources) :
         dataSource!!.clear()
     }
 
-    override fun init(cardsSourceResponse: CardsSourceResponse?): CardSource {
+    override fun getCards(cardsSourceResponse: CardsSourceResponse?): CardSource {
         dataSource = ArrayList()
         val titles = resources.getStringArray(R.array.notes)
         val texts = resources.getStringArray(R.array.texts)

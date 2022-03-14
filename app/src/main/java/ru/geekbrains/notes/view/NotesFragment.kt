@@ -37,6 +37,7 @@ class NotesFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
+
         adapter = NotesAdapter(this)
         adapter.setNotesOnClickListener(object : NotesOnClickListener {
             override fun onNoteClick(view: View, position: Int) {
@@ -49,12 +50,13 @@ class NotesFragment : Fragment() {
                 showNote()
             }
         })
+
         recyclerView.adapter = adapter
         val defaultItemAnimator = DefaultItemAnimator()
         defaultItemAnimator.changeDuration = 1000
         defaultItemAnimator.removeDuration = 1000
         recyclerView.itemAnimator = defaultItemAnimator
-        data = CardSourceRemoteImplementation().init(object : CardsSourceResponse {
+        data = CardSourceRemoteImplementation().getCards(object : CardsSourceResponse {
             override fun initialized(cardSource: CardSource) {
                 adapter.notifyDataSetChanged()
             }
@@ -66,7 +68,7 @@ class NotesFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val activity = context as MainActivity
-        activity.navigation?.let {  navigation = it }
+        navigation = activity.navigation
         publisher = activity.publisher
     }
 
@@ -129,7 +131,7 @@ class NotesFragment : Fragment() {
         val position = adapter.menuContextClickPosition
         when (item.itemId) {
             R.id.action_update_from_context -> {
-                navigation.addFragment(data.getCardData(position)?.let { newInstance(it) }, true)
+                navigation.addFragment(newInstance(data.getCardData(position)), true)
                 publisher.subscribe(object : Observer {
                     override fun updateState(cardData: CardData) {
                         data.updateCardData(position, cardData)

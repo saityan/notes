@@ -14,16 +14,18 @@ import ru.geekbrains.notes.R
 import ru.geekbrains.notes.data.*
 import ru.geekbrains.notes.observation.Observer
 import ru.geekbrains.notes.observation.Publisher
+import ru.geekbrains.notes.presenter.NotesPresenter
 import ru.geekbrains.notes.view.CardUpdateFragment.Companion.newInstance
 import ru.geekbrains.notes.view.NoteFragment.Companion.newInstance
 
 class NotesFragment : Fragment() {
+    private val presenter: NotesPresenter = NotesPresenter(this)
     var currentNote: Note = Note()
     var isLandscape = false
     private lateinit var data: CardSource
     private lateinit var adapter: NotesAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var navigation: Navigation
+    private var navigation: Navigation? = null
     private lateinit var publisher: Publisher
 
     override fun onCreateView(
@@ -104,7 +106,7 @@ class NotesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                navigation.addFragment(CardUpdateFragment.newInstance(), true)
+                navigation?.addFragment(CardUpdateFragment.newInstance(), true)
                 publisher.subscribe(object : Observer {
                     override fun updateState(cardData: CardData) {
                         data.addCardData(cardData)
@@ -131,7 +133,7 @@ class NotesFragment : Fragment() {
         val position = adapter.menuContextClickPosition
         when (item.itemId) {
             R.id.action_update_from_context -> {
-                navigation.addFragment(newInstance(data.getCardData(position)), true)
+                navigation?.addFragment(newInstance(data.getCardData(position)), true)
                 publisher.subscribe(object : Observer {
                     override fun updateState(cardData: CardData) {
                         data.updateCardData(position, cardData)

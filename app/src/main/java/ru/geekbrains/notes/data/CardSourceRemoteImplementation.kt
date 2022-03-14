@@ -19,7 +19,7 @@ class CardSourceRemoteImplementation : CardSource {
         return cardsData[position]
     }
 
-    override fun getCards(cardsSourceResponse: CardsSourceResponse?): CardSource {
+    override fun getCards(cardsSourceResponse: CardsSourceResponse): CardSource {
         collectionReference.orderBy(CardDataTranslate.Fields.DATE, Query.Direction.ASCENDING).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -31,7 +31,7 @@ class CardSourceRemoteImplementation : CardSource {
                         )
                         cardsData.add(cardData)
                     }
-                    cardsSourceResponse?.initialized(this@CardSourceRemoteImplementation)
+                    cardsSourceResponse.initialized(this@CardSourceRemoteImplementation)
                 }
             }
         return this

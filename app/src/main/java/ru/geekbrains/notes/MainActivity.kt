@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-    lateinit var navigation: Navigation
+    var navigation: Navigation? = null
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         navigation = Navigation(supportFragmentManager)
         initSideBar()
-        navigation.addFragment(NotesFragment.newInstance(), false)
+        navigation!!.addFragment(NotesFragment.newInstance(), false)
     }
 
     override fun onResume() {

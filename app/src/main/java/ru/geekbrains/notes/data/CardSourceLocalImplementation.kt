@@ -31,7 +31,7 @@ class CardSourceLocalImplementation(private val resources: Resources) :
         dataSource!!.clear()
     }
 
-    override fun getCards(cardsSourceResponse: CardsSourceResponse?): CardSource {
+    override fun getCards(cardsSourceResponse: CardsSourceResponse): CardSource {
         dataSource = ArrayList()
         val titles = resources.getStringArray(R.array.notes)
         val texts = resources.getStringArray(R.array.texts)
@@ -39,7 +39,7 @@ class CardSourceLocalImplementation(private val resources: Resources) :
             (dataSource as ArrayList<CardData?>).add(CardData(
                 i.toString(), titles[i], texts[i], Calendar.getInstance().time))
         }
-        cardsSourceResponse?.initialized(this)
+        cardsSourceResponse.initialized(this)
         return this
     }
 }

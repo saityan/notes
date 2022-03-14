@@ -14,12 +14,11 @@ import ru.geekbrains.notes.view.NoteFragment
 import ru.geekbrains.notes.view.NotesFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private var toolbar: Toolbar? = null
-    private var drawerLayout: DrawerLayout? = null
-    private var navigationView: NavigationView? = null
     val publisher = Publisher()
-    var navigation: Navigation? = null
-        private set
+    private lateinit var toolbar: Toolbar
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    lateinit var navigation: Navigation
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         navigation = Navigation(supportFragmentManager)
         initSideBar()
-        navigation!!.addFragment(NotesFragment.newInstance(), false)
+        navigation.addFragment(NotesFragment.newInstance(), false)
     }
 
     override fun onResume() {
@@ -55,9 +54,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.string.openNavDrawer,
             R.string.closeNavDrawer
         )
-        drawerLayout?.addDrawerListener(actionBarDrawerToggle)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        navigationView?.setNavigationItemSelectedListener(this)
+        navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

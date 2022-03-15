@@ -11,22 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.notes.MainActivity
 import ru.geekbrains.notes.R
-import ru.geekbrains.notes.data.*
-import ru.geekbrains.notes.observation.Observer
-import ru.geekbrains.notes.observation.Publisher
+import ru.geekbrains.notes.data.CardData
+import ru.geekbrains.notes.data.Note
 import ru.geekbrains.notes.presenter.NotesPresenter
+import ru.geekbrains.notes.presenter.NotesViewContract
 import ru.geekbrains.notes.view.CardUpdateFragment.Companion.newInstance
 import ru.geekbrains.notes.view.NoteFragment.Companion.newInstance
 
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(), NotesViewContract {
     private val presenter: NotesPresenter = NotesPresenter(this)
     var currentNote: Note = Note()
     var isLandscape = false
-    private lateinit var data: CardSource
+    private var data: List<CardData> = listOf()
     private lateinit var adapter: NotesAdapter
     private lateinit var recyclerView: RecyclerView
     private var navigation: Navigation? = null
-    private lateinit var publisher: Publisher
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,8 +43,8 @@ class NotesFragment : Fragment() {
         adapter.setNotesOnClickListener(object : NotesOnClickListener {
             override fun onNoteClick(view: View, position: Int) {
                 currentNote = Note(
-                    data.getCardData(position).title,
-                    data.getCardData(position).text
+                    data[position].title,
+                    data[position].text
                 )
                 isLandscape =
                     resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -58,12 +57,8 @@ class NotesFragment : Fragment() {
         defaultItemAnimator.changeDuration = 1000
         defaultItemAnimator.removeDuration = 1000
         recyclerView.itemAnimator = defaultItemAnimator
-        data = CardSourceRemoteImplementation().getCards(object : CardsSourceResponse {
-            override fun initialized(cardSource: CardSource) {
-                adapter.notifyDataSetChanged()
-            }
-        })
         adapter.setDataSource(data)
+        presenter.getDataFromSource()
         return view
     }
 
@@ -71,7 +66,6 @@ class NotesFragment : Fragment() {
         super.onAttach(context)
         val activity = context as MainActivity
         navigation = activity.navigation
-        publisher = activity.publisher
     }
 
     private fun showNote() {
@@ -107,17 +101,11 @@ class NotesFragment : Fragment() {
         when (item.itemId) {
             R.id.action_add -> {
                 navigation?.addFragment(CardUpdateFragment.newInstance(), true)
-                publisher.subscribe(object : Observer {
-                    override fun updateState(cardData: CardData) {
-                        data.addCardData(cardData)
-                        adapter.notifyDataSetChanged()
-                    }
-                })
+                presenter.addCard()
                 return true
             }
             R.id.action_clear -> {
-                data.clearCardData()
-                adapter.notifyDataSetChanged()
+                presenter.clear()
                 return true
             }
         }
@@ -133,13 +121,8 @@ class NotesFragment : Fragment() {
         val position = adapter.menuContextClickPosition
         when (item.itemId) {
             R.id.action_update_from_context -> {
-                navigation?.addFragment(newInstance(data.getCardData(position)), true)
-                publisher.subscribe(object : Observer {
-                    override fun updateState(cardData: CardData) {
-                        data.updateCardData(position, cardData)
-                        adapter.notifyItemChanged(position)
-                    }
-                })
+                navigation?.addFragment(newInstance(data[position]), true)
+                presenter.updatePosition(position)
                 return true
             }
             R.id.action_delete_from_context -> {
@@ -155,6 +138,19 @@ class NotesFragment : Fragment() {
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    override fun showNotes(notes: List<CardData>) {
+
+    }
+
+    override fun setData(data: List<CardData>) {
+        this.data = data
+    }
+
+    override fun setAdapter(data: List<CardData>) {
+        this.adapter.setDataSource(data)
+        this.adapter.notifyDataSetChanged()
     }
 
     companion object {

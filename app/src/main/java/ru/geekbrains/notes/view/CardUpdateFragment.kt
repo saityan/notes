@@ -16,7 +16,7 @@ import java.util.*
 
 class CardUpdateFragment : Fragment() {
     private var cardData = CardData()
-    private lateinit var publisher: Publisher
+    private val publisher = Publisher()
     private lateinit var title: TextInputEditText
     private lateinit var description: TextInputEditText
     private lateinit var datePicker: DatePicker
@@ -30,7 +30,6 @@ class CardUpdateFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        publisher = (context as MainActivity).publisher
     }
 
     override fun onCreateView(

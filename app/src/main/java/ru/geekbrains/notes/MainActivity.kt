@@ -14,7 +14,6 @@ import ru.geekbrains.notes.view.NoteFragment
 import ru.geekbrains.notes.view.NotesFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val publisher = Publisher()
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView

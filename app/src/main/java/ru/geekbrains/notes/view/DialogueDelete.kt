@@ -4,12 +4,13 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import ru.geekbrains.notes.data.CardData
 import ru.geekbrains.notes.data.CardSource
 
 class DialogueDelete : DialogFragment() {
     companion object {
         @JvmStatic
-        lateinit var data: CardSource
+        lateinit var data: List<CardData>
         var position: Int = -1
         lateinit var adapter: NotesAdapter
     }
@@ -20,7 +21,7 @@ class DialogueDelete : DialogFragment() {
             .setPositiveButton(
                 "Yes"
             ) { dialogInterface, i ->
-                data.deleteCardData(position)
+                data = data.drop(position)
                 adapter.notifyItemRemoved(position)
                 dismiss()
             }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.notes.MainActivity
@@ -34,31 +33,8 @@ class NotesFragment : Fragment(), NotesViewContract {
     ): View? {
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_notes, container, false)
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = linearLayoutManager
-
-        adapter = NotesAdapter(this)
-        adapter.setNotesOnClickListener(object : NotesOnClickListener {
-            override fun onNoteClick(view: View, position: Int) {
-                currentNote = Note(
-                    data[position].title,
-                    data[position].text
-                )
-                isLandscape =
-                    resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-                showNote()
-            }
-        })
-        recyclerView.adapter = adapter
-        adapter.setDataSource(data)
-        presenter.getDataFromSource()
-
-        val defaultItemAnimator = DefaultItemAnimator()
-        defaultItemAnimator.changeDuration = 1000
-        defaultItemAnimator.removeDuration = 1000
-        recyclerView.itemAnimator = defaultItemAnimator
+        initRecycler(view)
+        initAdapter()
         return view
     }
 
@@ -148,6 +124,31 @@ class NotesFragment : Fragment(), NotesViewContract {
     override fun setAdapter(data: List<CardData>) {
         this.adapter.setDataSource(data)
         this.adapter.notifyDataSetChanged()
+    }
+
+    private fun initAdapter() {
+        adapter = NotesAdapter(this)
+        adapter.setNotesOnClickListener(object : NotesOnClickListener {
+            override fun onNoteClick(view: View, position: Int) {
+                currentNote = Note(
+                    data[position].title,
+                    data[position].text
+                )
+                isLandscape =
+                    resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                showNote()
+            }
+        })
+        recyclerView.adapter = adapter
+        adapter.setDataSource(data)
+        presenter.getDataFromSource()
+    }
+
+    private fun initRecycler(view: View) {
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = linearLayoutManager
     }
 
     companion object {

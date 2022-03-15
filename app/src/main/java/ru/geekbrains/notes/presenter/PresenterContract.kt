@@ -5,8 +5,8 @@ import ru.geekbrains.notes.model.CardData
 interface PresenterContract {
     fun addCard()
     fun clear()
-    fun getDataFromSource()
-    fun updatePosition(position: Int)
-    fun notify(cardData: CardData)
     fun deleteCard(position: Int)
+    fun getDataFromSource()
+    fun notify(cardData: CardData)
+    fun updatePosition(position: Int)
 }

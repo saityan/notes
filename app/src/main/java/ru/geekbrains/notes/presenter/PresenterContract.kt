@@ -2,7 +2,7 @@ package ru.geekbrains.notes.presenter
 
 import ru.geekbrains.notes.data.CardData
 
-interface NotesPresenterContract {
+interface PresenterContract {
     fun addCard()
     fun clear()
     fun getDataFromSource()

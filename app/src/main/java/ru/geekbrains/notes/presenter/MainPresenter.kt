@@ -8,7 +8,7 @@ import ru.geekbrains.notes.observation.Observer
 import ru.geekbrains.notes.observation.Publisher
 import ru.geekbrains.notes.view.NotesFragment
 
-class MainPresenter (fragment: NotesFragment) : NotesPresenterContract {
+class MainPresenter (fragment: NotesFragment) : PresenterContract {
     private val notesView = fragment
     private val publisher = Publisher()
     private lateinit var cardsData : CardSource

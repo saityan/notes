@@ -1,4 +1,4 @@
-package ru.geekbrains.notes.observation
+package ru.geekbrains.notes.presenter.observation
 
 import ru.geekbrains.notes.model.CardData
 

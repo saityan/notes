@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import ru.geekbrains.notes.observation.Publisher
 import ru.geekbrains.notes.view.Navigation
 import ru.geekbrains.notes.view.NoteFragment
 import ru.geekbrains.notes.view.NotesFragment

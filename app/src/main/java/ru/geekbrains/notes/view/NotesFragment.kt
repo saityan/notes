@@ -13,13 +13,13 @@ import ru.geekbrains.notes.MainActivity
 import ru.geekbrains.notes.R
 import ru.geekbrains.notes.data.CardData
 import ru.geekbrains.notes.data.Note
-import ru.geekbrains.notes.presenter.NotesPresenter
+import ru.geekbrains.notes.presenter.MainPresenter
 import ru.geekbrains.notes.presenter.NotesViewContract
 import ru.geekbrains.notes.view.CardUpdateFragment.Companion.newInstance
 import ru.geekbrains.notes.view.NoteFragment.Companion.newInstance
 
 class NotesFragment : Fragment(), NotesViewContract {
-    private val presenter: NotesPresenter = NotesPresenter(this)
+    private val presenter: MainPresenter = MainPresenter(this)
     var currentNote: Note = Note()
     var isLandscape = false
     private var data: List<CardData> = listOf()

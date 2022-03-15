@@ -1,6 +1,5 @@
 package ru.geekbrains.notes.presenter
 
-import android.util.Log
 import ru.geekbrains.notes.data.CardData
 import ru.geekbrains.notes.data.CardSource
 import ru.geekbrains.notes.data.CardSourceRemoteImplementation
@@ -9,7 +8,7 @@ import ru.geekbrains.notes.observation.Observer
 import ru.geekbrains.notes.observation.Publisher
 import ru.geekbrains.notes.view.NotesFragment
 
-class NotesPresenter (fragment: NotesFragment) : NotesPresenterContract {
+class MainPresenter (fragment: NotesFragment) : NotesPresenterContract {
     private val notesView = fragment
     private val publisher = Publisher()
     private lateinit var cardsData : CardSource
@@ -26,7 +25,6 @@ class NotesPresenter (fragment: NotesFragment) : NotesPresenterContract {
     override fun updatePosition(position: Int) {
         publisher.subscribe(object : Observer {
             override fun updateState(cardData: CardData) {
-                Log.d("myLogs", "updatePosition")
                 cardsData.updateCardData(position, cardData)
                 updateViewData()
             }
@@ -40,7 +38,6 @@ class NotesPresenter (fragment: NotesFragment) : NotesPresenterContract {
     override fun addCard() {
         publisher.subscribe(object : Observer {
             override fun updateState(cardData: CardData) {
-                Log.d("myLogs", "addCard")
                 cardsData.addCardData(cardData)
                 updateViewData()
             }

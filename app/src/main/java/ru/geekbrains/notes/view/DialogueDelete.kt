@@ -5,14 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import ru.geekbrains.notes.model.CardData
+import ru.geekbrains.notes.presenter.MainPresenter
 
-class DialogueDelete : DialogFragment() {
-    companion object {
-        @JvmStatic
-        lateinit var data: List<CardData>
-        var position: Int = -1
-        lateinit var adapter: NotesAdapter
-    }
+class DialogueDelete(
+    private val presenter: MainPresenter,
+    private val cardData: CardData,
+    private val position: Int
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
@@ -20,8 +19,8 @@ class DialogueDelete : DialogFragment() {
             .setPositiveButton(
                 "Yes"
             ) { dialogInterface, i ->
-                data = data.drop(position)
-                adapter.notifyItemRemoved(position)
+                presenter.deleteCard(position)
+                presenter.notify(cardData)
                 dismiss()
             }
             .setNegativeButton(

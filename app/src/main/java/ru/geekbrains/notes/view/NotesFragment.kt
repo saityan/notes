@@ -51,14 +51,14 @@ class NotesFragment : Fragment(), NotesViewContract {
                 showNote()
             }
         })
-
         recyclerView.adapter = adapter
+        adapter.setDataSource(data)
+        presenter.getDataFromSource()
+
         val defaultItemAnimator = DefaultItemAnimator()
         defaultItemAnimator.changeDuration = 1000
         defaultItemAnimator.removeDuration = 1000
         recyclerView.itemAnimator = defaultItemAnimator
-        adapter.setDataSource(data)
-        presenter.getDataFromSource()
         return view
     }
 
@@ -100,7 +100,7 @@ class NotesFragment : Fragment(), NotesViewContract {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                navigation?.addFragment(CardUpdateFragment.newInstance(presenter), true)
+                navigation?.addFragment(newInstance(presenter), true)
                 presenter.addCard()
                 return true
             }
@@ -126,10 +126,7 @@ class NotesFragment : Fragment(), NotesViewContract {
                 return true
             }
             R.id.action_delete_from_context -> {
-                val dialogueDelete = DialogueDelete()
-                DialogueDelete.data = data
-                DialogueDelete.position = position
-                DialogueDelete.adapter = adapter
+                val dialogueDelete = DialogueDelete(presenter, data[position], position)
                 dialogueDelete.show(
                     requireActivity().supportFragmentManager,
                     "deletion check"

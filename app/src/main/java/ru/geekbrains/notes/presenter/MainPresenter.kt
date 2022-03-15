@@ -14,7 +14,7 @@ class MainPresenter (fragment: NotesFragment) : PresenterContract {
     private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
 
-    override fun getDataFromSource(){
+    override fun getDataFromSource() {
         cardsData = CardSourceRemoteImplementation().getCards(object : CardsSourceResponse {
             override fun initialized(cardSource: CardSource) {
                 updateViewData()
@@ -31,8 +31,17 @@ class MainPresenter (fragment: NotesFragment) : PresenterContract {
         })
     }
 
-    override fun notify(cardData: CardData) {
-        publisher.notifyTask(cardData)
+    override fun deleteCard(position: Int) {
+        publisher.subscribe(object : Observer {
+            override fun updateState(cardData: CardData) {
+                cardsData?.deleteCardData(position)
+                cardsData = CardSourceRemoteImplementation().getCards(object : CardsSourceResponse {
+                    override fun initialized(cardSource: CardSource) {
+                        updateViewData()
+                    }
+                })
+            }
+        })
     }
 
     override fun addCard() {
@@ -47,6 +56,10 @@ class MainPresenter (fragment: NotesFragment) : PresenterContract {
     override fun clear() {
         cardsData?.clearCardData()
         data = mutableListOf()
+    }
+
+    override fun notify(cardData: CardData) {
+        publisher.notifyTask(cardData)
     }
 
     private fun convertCardsToData() {

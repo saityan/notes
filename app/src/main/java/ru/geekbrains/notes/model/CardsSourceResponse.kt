@@ -1,4 +1,4 @@
-package ru.geekbrains.notes.data
+package ru.geekbrains.notes.model
 
 interface CardsSourceResponse {
     fun initialized (cardSource: CardSource)

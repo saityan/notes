@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.notes.R
-import ru.geekbrains.notes.data.CardData
+import ru.geekbrains.notes.model.CardData
 import ru.geekbrains.notes.view.NotesAdapter.NotesViewHolder
 
 class NotesAdapter(private val fragment: Fragment) : RecyclerView.Adapter<NotesViewHolder>() {

@@ -1,4 +1,4 @@
-package ru.geekbrains.notes.data
+package ru.geekbrains.notes.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

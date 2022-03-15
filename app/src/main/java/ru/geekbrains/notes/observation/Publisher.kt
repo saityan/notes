@@ -1,6 +1,6 @@
 package ru.geekbrains.notes.observation
 
-import ru.geekbrains.notes.data.CardData
+import ru.geekbrains.notes.model.CardData
 
 class Publisher {
     private val observers: MutableList<Observer>

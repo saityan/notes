@@ -4,8 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import ru.geekbrains.notes.data.CardData
-import ru.geekbrains.notes.data.CardSource
+import ru.geekbrains.notes.model.CardData
 
 class DialogueDelete : DialogFragment() {
     companion object {

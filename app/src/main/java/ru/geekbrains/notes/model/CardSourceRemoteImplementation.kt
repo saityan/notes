@@ -1,4 +1,4 @@
-package ru.geekbrains.notes.data
+package ru.geekbrains.notes.model
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query

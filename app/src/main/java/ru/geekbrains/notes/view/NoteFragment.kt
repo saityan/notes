@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import ru.geekbrains.notes.data.Note
+import ru.geekbrains.notes.model.Note
 import ru.geekbrains.notes.R
 
 class NoteFragment : Fragment() {

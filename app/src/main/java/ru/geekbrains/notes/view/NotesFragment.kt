@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.notes.MainActivity
 import ru.geekbrains.notes.R
-import ru.geekbrains.notes.data.CardData
-import ru.geekbrains.notes.data.Note
+import ru.geekbrains.notes.model.CardData
+import ru.geekbrains.notes.model.Note
 import ru.geekbrains.notes.presenter.MainPresenter
 import ru.geekbrains.notes.presenter.NotesViewContract
 import ru.geekbrains.notes.view.CardUpdateFragment.Companion.newInstance

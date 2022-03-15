@@ -1,6 +1,6 @@
 package ru.geekbrains.notes.presenter
 
-import ru.geekbrains.notes.data.CardData
+import ru.geekbrains.notes.model.CardData
 
 interface PresenterContract {
     fun addCard()

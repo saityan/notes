@@ -8,7 +8,7 @@ import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import ru.geekbrains.notes.R
-import ru.geekbrains.notes.data.CardData
+import ru.geekbrains.notes.model.CardData
 import ru.geekbrains.notes.presenter.MainPresenter
 import java.util.*
 

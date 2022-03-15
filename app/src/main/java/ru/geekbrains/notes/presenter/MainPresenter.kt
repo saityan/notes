@@ -1,9 +1,9 @@
 package ru.geekbrains.notes.presenter
 
-import ru.geekbrains.notes.data.CardData
-import ru.geekbrains.notes.data.CardSource
-import ru.geekbrains.notes.data.CardSourceRemoteImplementation
-import ru.geekbrains.notes.data.CardsSourceResponse
+import ru.geekbrains.notes.model.CardData
+import ru.geekbrains.notes.model.CardSource
+import ru.geekbrains.notes.model.CardSourceRemoteImplementation
+import ru.geekbrains.notes.model.CardsSourceResponse
 import ru.geekbrains.notes.observation.Observer
 import ru.geekbrains.notes.observation.Publisher
 import ru.geekbrains.notes.view.NotesFragment

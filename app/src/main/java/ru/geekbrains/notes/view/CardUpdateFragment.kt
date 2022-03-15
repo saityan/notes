@@ -1,6 +1,5 @@
 package ru.geekbrains.notes.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +7,13 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
-import ru.geekbrains.notes.MainActivity
 import ru.geekbrains.notes.R
 import ru.geekbrains.notes.data.CardData
-import ru.geekbrains.notes.observation.Publisher
+import ru.geekbrains.notes.presenter.NotesPresenter
 import java.util.*
 
-class CardUpdateFragment : Fragment() {
+class CardUpdateFragment(private val presenter: NotesPresenter) : Fragment() {
     private var cardData = CardData()
-    private val publisher = Publisher()
     private lateinit var title: TextInputEditText
     private lateinit var description: TextInputEditText
     private lateinit var datePicker: DatePicker
@@ -26,10 +23,6 @@ class CardUpdateFragment : Fragment() {
         if (arguments != null) {
             requireArguments().getParcelable<CardData>(ARG_CARD_DATA)?.let { cardData = it }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -92,21 +85,21 @@ class CardUpdateFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        publisher.notifyTask(cardData)
+        presenter.notify(cardData)
     }
 
     companion object {
         private const val ARG_CARD_DATA = "Param_CardData"
-        fun newInstance(cardData: CardData): CardUpdateFragment {
-            val fragment = CardUpdateFragment()
+        fun newInstance(cardData: CardData, presenter: NotesPresenter): CardUpdateFragment {
+            val fragment = CardUpdateFragment(presenter)
             val args = Bundle()
             args.putParcelable(ARG_CARD_DATA, cardData)
             fragment.arguments = args
             return fragment
         }
 
-        fun newInstance(): CardUpdateFragment {
-            return CardUpdateFragment()
+        fun newInstance(presenter: NotesPresenter): CardUpdateFragment {
+            return CardUpdateFragment(presenter)
         }
     }
 }

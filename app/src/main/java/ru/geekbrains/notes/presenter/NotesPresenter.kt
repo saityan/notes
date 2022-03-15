@@ -33,6 +33,10 @@ class NotesPresenter (fragment: NotesFragment) : NotesPresenterContract {
         })
     }
 
+    override fun notify(cardData: CardData) {
+        publisher.notifyTask(cardData)
+    }
+
     override fun addCard() {
         publisher.subscribe(object : Observer {
             override fun updateState(cardData: CardData) {

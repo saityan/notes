@@ -100,7 +100,7 @@ class NotesFragment : Fragment(), NotesViewContract {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                navigation?.addFragment(CardUpdateFragment.newInstance(), true)
+                navigation?.addFragment(CardUpdateFragment.newInstance(presenter), true)
                 presenter.addCard()
                 return true
             }
@@ -121,7 +121,7 @@ class NotesFragment : Fragment(), NotesViewContract {
         val position = adapter.menuContextClickPosition
         when (item.itemId) {
             R.id.action_update_from_context -> {
-                navigation?.addFragment(newInstance(data[position]), true)
+                navigation?.addFragment(newInstance(data[position], presenter), true)
                 presenter.updatePosition(position)
                 return true
             }

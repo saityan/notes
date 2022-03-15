@@ -12,7 +12,7 @@ data class Note(
     var dueDate: String?
 ) : Parcelable {
 
-    constructor() : this("", "", Calendar.getInstance().time.toString(), "")
+    constructor() : this("", "", "", "")
 
     constructor(title: String?, text: String?) :
             this(title, text, Calendar.getInstance().time.toString(), "")

@@ -11,7 +11,7 @@ import ru.geekbrains.notes.view.NotesFragment
 class MainPresenter (fragment: NotesFragment) : PresenterContract {
     private val notesView = fragment
     private val publisher = Publisher()
-    private lateinit var cardsData : CardSource
+    private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
 
     override fun getDataFromSource(){
@@ -25,7 +25,7 @@ class MainPresenter (fragment: NotesFragment) : PresenterContract {
     override fun updatePosition(position: Int) {
         publisher.subscribe(object : Observer {
             override fun updateState(cardData: CardData) {
-                cardsData.updateCardData(position, cardData)
+                cardsData?.updateCardData(position, cardData)
                 updateViewData()
             }
         })
@@ -38,23 +38,25 @@ class MainPresenter (fragment: NotesFragment) : PresenterContract {
     override fun addCard() {
         publisher.subscribe(object : Observer {
             override fun updateState(cardData: CardData) {
-                cardsData.addCardData(cardData)
+                cardsData?.addCardData(cardData)
                 updateViewData()
             }
         })
     }
 
     override fun clear() {
-        cardsData.clearCardData()
+        cardsData?.clearCardData()
         data = mutableListOf()
     }
 
     private fun convertCardsToData() {
-        val size = cardsData.size()
-        if (size > 0) {
-            data = mutableListOf()
-            for (i in 0 until size) {
-                data.add(cardsData.getCardData(i))
+        cardsData?.let {
+            val size = it.size()
+            if (size > 0) {
+                data = mutableListOf()
+                for (i in 0 until size) {
+                    data.add(it.getCardData(i))
+                }
             }
         }
     }

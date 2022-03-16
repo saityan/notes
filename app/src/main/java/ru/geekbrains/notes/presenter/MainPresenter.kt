@@ -6,10 +6,8 @@ import ru.geekbrains.notes.repository.CardSourceRemoteImplementation
 import ru.geekbrains.notes.repository.CardsSourceResponse
 import ru.geekbrains.notes.presenter.observation.Observer
 import ru.geekbrains.notes.presenter.observation.Publisher
-import ru.geekbrains.notes.view.NotesFragment
 
-class MainPresenter (fragment: NotesFragment) : MainPresenterContract {
-    private val notesView = fragment
+class MainPresenter (private val notesViewContract: NotesViewContract) : MainPresenterContract {
     private val publisher = Publisher()
     private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
@@ -76,7 +74,7 @@ class MainPresenter (fragment: NotesFragment) : MainPresenterContract {
 
     private fun updateViewData() {
         convertCardsToData()
-        notesView.setData(data)
-        notesView.setAdapter(data)
+        notesViewContract.setData(data)
+        notesViewContract.setAdapter(data)
     }
 }

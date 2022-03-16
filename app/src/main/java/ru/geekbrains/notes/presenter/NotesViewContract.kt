@@ -5,5 +5,4 @@ import ru.geekbrains.notes.model.CardData
 interface NotesViewContract {
     fun setAdapter(data: List<CardData>)
     fun setData(data: List<CardData>)
-    fun showNotes(notes: List<CardData>)
 }

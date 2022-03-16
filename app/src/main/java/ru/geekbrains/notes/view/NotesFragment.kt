@@ -113,10 +113,6 @@ class NotesFragment : Fragment(), NotesViewContract {
         return super.onContextItemSelected(item)
     }
 
-    override fun showNotes(notes: List<CardData>) {
-
-    }
-
     override fun setData(data: List<CardData>) {
         this.data = data
     }

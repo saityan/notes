@@ -1,7 +1,9 @@
-package ru.geekbrains.notes.model
+package ru.geekbrains.notes.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import ru.geekbrains.notes.model.CardData
+import ru.geekbrains.notes.model.CardDataTranslate
 import java.util.*
 
 class CardSourceRemoteImplementation : CardSource {
@@ -43,8 +45,7 @@ class CardSourceRemoteImplementation : CardSource {
 
     override fun updateCardData(position: Int, newCardData: CardData) {
         collectionReference.document(cardsData[position].id).update(
-            CardDataTranslate
-                .cardDataToDocument(newCardData)
+            CardDataTranslate.cardDataToDocument(newCardData)
         )
     }
 

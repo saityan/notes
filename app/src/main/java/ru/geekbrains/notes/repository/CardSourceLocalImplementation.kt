@@ -1,7 +1,8 @@
-package ru.geekbrains.notes.model
+package ru.geekbrains.notes.repository
 
 import android.content.res.Resources
 import ru.geekbrains.notes.R
+import ru.geekbrains.notes.model.CardData
 import java.util.*
 
 class CardSourceLocalImplementation(private val resources: Resources) :
@@ -36,8 +37,10 @@ class CardSourceLocalImplementation(private val resources: Resources) :
         val titles = resources.getStringArray(R.array.notes)
         val texts = resources.getStringArray(R.array.texts)
         for (i in titles.indices) {
-            (dataSource as ArrayList<CardData?>).add(CardData(
-                i.toString(), titles[i], texts[i], Calendar.getInstance().time))
+            (dataSource as ArrayList<CardData?>).add(
+                CardData(
+                i.toString(), titles[i], texts[i], Calendar.getInstance().time)
+            )
         }
         cardsSourceResponse.initialized(this)
         return this

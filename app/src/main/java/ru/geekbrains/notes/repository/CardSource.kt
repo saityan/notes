@@ -1,4 +1,6 @@
-package ru.geekbrains.notes.model
+package ru.geekbrains.notes.repository
+
+import ru.geekbrains.notes.model.CardData
 
 interface CardSource {
     fun size(): Int

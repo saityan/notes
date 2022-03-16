@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import ru.geekbrains.notes.model.CardData
-import ru.geekbrains.notes.presenter.MainPresenter
+import ru.geekbrains.notes.presenter.MainMainPresenter
 
 class DialogueDelete(
-    private val presenter: MainPresenter,
+    private val presenter: MainMainPresenter,
     private val cardData: CardData,
     private val position: Int
 ) : DialogFragment() {

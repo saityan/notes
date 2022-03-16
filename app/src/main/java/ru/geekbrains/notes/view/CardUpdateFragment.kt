@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import ru.geekbrains.notes.R
 import ru.geekbrains.notes.model.CardData
-import ru.geekbrains.notes.presenter.MainPresenter
+import ru.geekbrains.notes.presenter.MainMainPresenter
 import java.util.*
 
-class CardUpdateFragment(private val presenter: MainPresenter) : Fragment() {
+class CardUpdateFragment(private val presenter: MainMainPresenter) : Fragment() {
     private var cardData = CardData()
     private lateinit var title: TextInputEditText
     private lateinit var description: TextInputEditText
@@ -90,7 +90,7 @@ class CardUpdateFragment(private val presenter: MainPresenter) : Fragment() {
 
     companion object {
         private const val ARG_CARD_DATA = "Param_CardData"
-        fun newInstance(cardData: CardData, presenter: MainPresenter): CardUpdateFragment {
+        fun newInstance(cardData: CardData, presenter: MainMainPresenter): CardUpdateFragment {
             val fragment = CardUpdateFragment(presenter)
             val args = Bundle()
             args.putParcelable(ARG_CARD_DATA, cardData)
@@ -98,7 +98,7 @@ class CardUpdateFragment(private val presenter: MainPresenter) : Fragment() {
             return fragment
         }
 
-        fun newInstance(presenter: MainPresenter): CardUpdateFragment {
+        fun newInstance(presenter: MainMainPresenter): CardUpdateFragment {
             return CardUpdateFragment(presenter)
         }
     }

@@ -2,7 +2,7 @@ package ru.geekbrains.notes.presenter
 
 import ru.geekbrains.notes.model.CardData
 
-interface PresenterContract {
+interface MainPresenterContract {
     fun addCard()
     fun clear()
     fun deleteCard(position: Int)

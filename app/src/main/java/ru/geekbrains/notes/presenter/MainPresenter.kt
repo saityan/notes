@@ -7,13 +7,16 @@ import ru.geekbrains.notes.repository.CardsSourceResponse
 import ru.geekbrains.notes.presenter.observation.Observer
 import ru.geekbrains.notes.presenter.observation.Publisher
 
-class MainPresenter (private val notesViewContract: NotesViewContract) : MainPresenterContract {
+class MainPresenter (
+    private val notesViewContract: NotesViewContract,
+    private val repository : CardSource
+) : MainPresenterContract {
     private val publisher = Publisher()
     private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
 
     override fun getDataFromSource() {
-        cardsData = CardSourceRemoteImplementation().getCards(object : CardsSourceResponse {
+        cardsData = repository.getCards(object : CardsSourceResponse {
             override fun initialized(cardSource: CardSource) {
                 updateViewData()
             }

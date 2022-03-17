@@ -66,4 +66,11 @@ class MainPresenterTest {
         mainPresenter.clear()
         verify(cardSource).clearCardData()
     }
+
+    @Test
+    fun notify_Test() {
+        val cardData = CardData()
+        mainPresenter.notify(cardData)
+        verify(publisher).notifyTask(cardData)
+    }
 }

@@ -11,7 +11,7 @@ class MainPresenter (
     private val notesViewContract: NotesViewContract,
     private val repository : CardSource
 ) : MainPresenterContract {
-    private val publisher = Publisher()
+    private val publisher = Publisher
     private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
 

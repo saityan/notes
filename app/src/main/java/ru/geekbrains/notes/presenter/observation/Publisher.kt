@@ -2,7 +2,7 @@ package ru.geekbrains.notes.presenter.observation
 
 import ru.geekbrains.notes.model.CardData
 
-class Publisher {
+object Publisher {
     private val observers: MutableList<Observer>
     fun subscribe(observer: Observer) {
         observers.add(observer)

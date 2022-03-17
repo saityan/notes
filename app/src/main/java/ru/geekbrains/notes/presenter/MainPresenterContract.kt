@@ -8,5 +8,5 @@ interface MainPresenterContract {
     fun deleteCard(position: Int)
     fun getDataFromSource()
     fun notify(cardData: CardData)
-    fun updatePosition(position: Int)
+    fun updateCard(position: Int)
 }

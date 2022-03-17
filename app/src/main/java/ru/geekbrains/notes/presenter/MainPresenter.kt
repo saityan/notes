@@ -1,11 +1,10 @@
 package ru.geekbrains.notes.presenter
 
 import ru.geekbrains.notes.model.CardData
-import ru.geekbrains.notes.repository.CardSource
-import ru.geekbrains.notes.repository.CardSourceRemoteImplementation
-import ru.geekbrains.notes.repository.CardsSourceResponse
 import ru.geekbrains.notes.presenter.observation.Observer
 import ru.geekbrains.notes.presenter.observation.Publisher
+import ru.geekbrains.notes.repository.CardSource
+import ru.geekbrains.notes.repository.CardsSourceResponse
 
 class MainPresenter (
     private val notesViewContract: NotesViewContract,
@@ -25,28 +24,6 @@ class MainPresenter (
         cardsData = repository.getCards(cardsSourceResponse)
     }
 
-    override fun updatePosition(position: Int) {
-        publisher.subscribe(object : Observer {
-            override fun updateState(cardData: CardData) {
-                cardsData?.updateCardData(position, cardData)
-                updateViewData()
-            }
-        })
-    }
-
-    override fun deleteCard(position: Int) {
-        publisher.subscribe(object : Observer {
-            override fun updateState(cardData: CardData) {
-                cardsData?.deleteCardData(position)
-                cardsData = CardSourceRemoteImplementation().getCards(object : CardsSourceResponse {
-                    override fun initialized(cardSource: CardSource) {
-                        updateViewData()
-                    }
-                })
-            }
-        })
-    }
-
     override fun addCard() {
         publisher.subscribe(object : Observer {
             override fun updateState(cardData: CardData) {
@@ -56,8 +33,35 @@ class MainPresenter (
         })
     }
 
+    override fun deleteCard(position: Int) {
+        publisher.subscribe(object : Observer {
+            override fun updateState(cardData: CardData) {
+                cardsData?.deleteCardData(position)
+                cardsData = repository.getCards(object : CardsSourceResponse {
+                    override fun initialized(cardSource: CardSource) {
+                        updateViewData()
+                    }
+                })
+            }
+        })
+    }
+
+    override fun updateCard(position: Int) {
+        publisher.subscribe(object : Observer {
+            override fun updateState(cardData: CardData) {
+                cardsData?.updateCardData(position, cardData)
+                updateViewData()
+            }
+        })
+    }
+
     override fun clear() {
-        cardsData?.clearCardData()
+        repository.clearCardData()
+        cardsData = repository.getCards(object : CardsSourceResponse {
+            override fun initialized(cardSource: CardSource) {
+                updateViewData()
+            }
+        })
         data = mutableListOf()
     }
 

@@ -14,13 +14,14 @@ class MainPresenter (
     private val publisher = Publisher
     private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
+    private val cardsSourceResponse = object : CardsSourceResponse {
+        override fun initialized(cardSource: CardSource) {
+            updateViewData()
+        }
+    }
 
     override fun getDataFromSource() {
-        cardsData = repository.getCards(object : CardsSourceResponse {
-            override fun initialized(cardSource: CardSource) {
-                updateViewData()
-            }
-        })
+        cardsData = repository.getCards(cardsSourceResponse)
     }
 
     override fun updatePosition(position: Int) {
@@ -80,4 +81,7 @@ class MainPresenter (
         notesViewContract.setData(data)
         notesViewContract.setAdapter(data)
     }
+
+    //for tests
+    fun getCardsSourceResponse() : CardsSourceResponse = this.cardsSourceResponse
 }

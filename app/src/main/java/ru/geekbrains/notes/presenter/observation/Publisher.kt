@@ -9,7 +9,7 @@ class Publisher {
     }
 
     private fun unsubscribe(observer: Observer) {
-        observers.removeIf{ observers.iterator() == observer }
+        observers.remove(observer)
     }
 
     fun notifyTask(cardData: CardData) {

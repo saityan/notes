@@ -101,7 +101,7 @@ class NotesFragment : Fragment(), NotesViewContract {
         when (item.itemId) {
             R.id.action_update_from_context -> {
                 navigation?.addFragment(newInstance(data[position], presenter), true)
-                presenter.updatePosition(position)
+                presenter.updateCard(position)
                 return true
             }
             R.id.action_delete_from_context -> {

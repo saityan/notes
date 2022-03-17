@@ -36,11 +36,34 @@ class MainPresenterTest {
     }
 
     @Test
+    fun addCard_Test() {
+        val cardData = CardData()
+        mainPresenter.addCard()
+        mainPresenter.notify(cardData)
+        verify(publisher).notifyTask(cardData)
+    }
+
+    @Test
+    fun deleteCard_Test() {
+        val position = 0
+        val cardData = CardData()
+        mainPresenter.deleteCard(position)
+        mainPresenter.notify(cardData)
+        verify(publisher).notifyTask(cardData)
+    }
+
+    @Test
     fun updatePosition_Test() {
         val position = 0
         val cardData = CardData()
-        mainPresenter.updatePosition(position)
+        mainPresenter.updateCard(position)
         mainPresenter.notify(cardData)
         verify(publisher).notifyTask(cardData)
+    }
+
+    @Test
+    fun clear_Test() {
+        mainPresenter.clear()
+        verify(cardSource).clearCardData()
     }
 }

@@ -2,14 +2,14 @@ package ru.geekbrains.notes.presenter.observation
 
 import ru.geekbrains.notes.model.CardData
 
-object Publisher {
+class Publisher {
     private val observers = ArrayList<Observer>()
     fun subscribe(observer: Observer) {
         observers.add(observer)
     }
 
     private fun unsubscribe(observer: Observer) {
-        observers.remove(observer)
+        observers.removeIf{ observers.iterator() == observer }
     }
 
     fun notifyTask(cardData: CardData) {

@@ -9,9 +9,10 @@ import ru.geekbrains.notes.presenter.observation.Publisher
 
 class MainPresenter (
     private val notesViewContract: NotesViewContract,
-    private val repository : CardSource
+    private val repository : CardSource,
+    private val publisher : Publisher
 ) : MainPresenterContract {
-    private val publisher = Publisher
+
     private var cardsData : CardSource? = null
     private var data = mutableListOf<CardData>()
     private val cardsSourceResponse = object : CardsSourceResponse {

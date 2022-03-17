@@ -14,13 +14,14 @@ import ru.geekbrains.notes.model.CardData
 import ru.geekbrains.notes.model.Note
 import ru.geekbrains.notes.presenter.MainPresenter
 import ru.geekbrains.notes.presenter.NotesViewContract
+import ru.geekbrains.notes.presenter.observation.Publisher
 import ru.geekbrains.notes.repository.CardSourceInstance
 import ru.geekbrains.notes.view.CardUpdateFragment.Companion.newInstance
 import ru.geekbrains.notes.view.NoteFragment.Companion.newInstance
 
 class NotesFragment : Fragment(), NotesViewContract {
     private val presenter: MainPresenter =
-        MainPresenter(this, CardSourceInstance)
+        MainPresenter(this, CardSourceInstance, Publisher())
     var currentNote: Note = Note()
     var isLandscape = false
     private var data: List<CardData> = listOf()

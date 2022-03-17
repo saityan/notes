@@ -3,13 +3,11 @@ package ru.geekbrains.notes
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import ru.geekbrains.notes.presenter.MainPresenter
 import ru.geekbrains.notes.presenter.NotesViewContract
 import ru.geekbrains.notes.repository.CardSource
-import ru.geekbrains.notes.repository.CardsSourceResponse
 
 class MainPresenterTest {
     private lateinit var mainPresenter: MainPresenter

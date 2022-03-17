@@ -3,7 +3,7 @@ package ru.geekbrains.notes.presenter.observation
 import ru.geekbrains.notes.model.CardData
 
 object Publisher {
-    private val observers: MutableList<Observer>
+    private val observers = ArrayList<Observer>()
     fun subscribe(observer: Observer) {
         observers.add(observer)
     }
@@ -17,9 +17,5 @@ object Publisher {
             observer.updateState(cardData)
             unsubscribe(observer)
         }
-    }
-
-    init {
-        observers = ArrayList()
     }
 }
